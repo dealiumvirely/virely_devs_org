@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virely LLC — Contractor Developer Engagement SOP v1.0</title>
+<style>
+/* ── VIRELY DESIGN TOKENS ───────────────────────────────── */
+:root {
+  --vly-navy:       #1A2C5B;
+  --vly-navy-dark:  #0F1B3C;
+  --vly-navy-mid:   #243570;
+  --vly-blue:       #2D6BE4;
+  --vly-blue-light: #4F87F0;
+  --vly-sky:        #D6E4F7;
+  --vly-sky-pale:   #EBF3FF;
+  --vly-teal:       #00AABF;
+  --vly-gold:       #F4A825;
+  --vly-gold-pale:  #FFF8E1;
+  --vly-red:        #D93025;
+  --vly-red-pale:   #FEF0EE;
+  --vly-green:      #1A8A4A;
+  --vly-green-pale: #EAFAF1;
+  --vly-slate:      #4A5568;
+  --vly-slate-light:#6B7B94;
+  --vly-gray-100:   #F7F9FC;
+  --vly-gray-200:   #ECEEF4;
+  --vly-gray-300:   #D1D7E4;
+  --vly-gray-400:   #A0AABF;
+  --vly-text:       #1E2A42;
+  --vly-text-light: #4A5568;
+  --vly-white:      #FFFFFF;
+  --shadow-sm:      0 1px 4px rgba(26,44,91,0.08);
+  --shadow-md:      0 4px 16px rgba(26,44,91,0.12);
+  --shadow-lg:      0 8px 32px rgba(26,44,91,0.16);
+  --radius:         8px;
+  --radius-lg:      12px;
+  --font:           'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* ── RESET & BASE ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--vly-text);
+  background: var(--vly-gray-200);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT SHELL ────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--vly-white);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--vly-navy);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: var(--vly-navy-dark); }
+.sidebar::-webkit-scrollbar-thumb { background: var(--vly-navy-mid); border-radius: 2px; }
+
+.sidebar-brand {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-brand .brand-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--vly-white);
+  letter-spacing: 0.3px;
+}
+.sidebar-brand .brand-tag {
+  font-size: 11px;
+  color: #7B9FD4;
+  margin-top: 3px;
+  font-style: italic;
+}
+.sidebar-brand .doc-badge {
+  display: inline-block;
+  background: rgba(45,107,228,0.35);
+  color: #A8C8F0;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+
+.toc-label {
+  padding: 14px 20px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #5A7BA8;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.toc-nav { padding: 0 0 24px; }
+.toc-nav a {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 20px;
+  font-size: 12px;
+  color: #8BAFD6;
+  text-decoration: none;
+  line-height: 1.4;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+.toc-nav a:hover {
+  color: var(--vly-white);
+  background: rgba(255,255,255,0.06);
+  border-left-color: var(--vly-blue);
+}
+.toc-nav a.active {
+  color: var(--vly-white);
+  background: rgba(45,107,228,0.15);
+  border-left-color: var(--vly-blue);
+}
+.toc-nav .toc-num {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: right;
+  color: #4A6C96;
+  font-weight: 700;
+  font-size: 11px;
+  padding-top: 1px;
+}
+
+/* ── MAIN CONTENT ────────────────────────────────────────── */
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOPBAR ──────────────────────────────────────────────── */
+.topbar {
+  background: var(--vly-white);
+  border-bottom: 1px solid var(--vly-gray-300);
+  padding: 0 40px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: var(--shadow-sm);
+}
+.topbar-left { font-size: 12.5px; color: var(--vly-slate); font-weight: 500; }
+.topbar-right { display: flex; gap: 12px; align-items: center; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+.badge-blue { background: var(--vly-sky); color: var(--vly-blue); }
+.badge-navy { background: var(--vly-sky-pale); color: var(--vly-navy); }
+
+/* ── COVER ───────────────────────────────────────────────── */
+.cover {
+  background: linear-gradient(145deg, var(--vly-navy-dark) 0%, var(--vly-navy) 45%, #1E3A8A 75%, #1a56c4 100%);
+  padding: 64px 56px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(45,107,228,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 20%;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(0,170,191,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(45,107,228,0.25);
+  border: 1px solid rgba(45,107,228,0.4);
+  color: #93C5FD;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+.cover-eyebrow::before { content: '◆'; font-size: 8px; }
+.cover h1 {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--vly-white);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.cover h1 span { color: #60A5FA; }
+.cover-sub {
+  font-size: 18px;
+  color: #93C5FD;
+  font-weight: 400;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+.cover-divider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--vly-blue), var(--vly-teal));
+  border-radius: 2px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+.cover-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  overflow: hidden;
+  width: fit-content;
+  position: relative;
+  z-index: 1;
+}
+.cover-meta-item {
+  padding: 12px 20px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.cover-meta-item:nth-child(3n) { border-right: none; }
+.cover-meta-item:nth-last-child(-n+3) { border-bottom: none; }
+.cover-meta-item .meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #60A5FA;
+  margin-bottom: 3px;
+}
+.cover-meta-item .meta-val {
+  font-size: 13px;
+  color: var(--vly-white);
+  font-weight: 500;
+}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+.content { padding: 0 56px 64px; flex: 1; }
+
+/* ── SECTION HEADINGS ────────────────────────────────────── */
+.sec-block {
+  margin-top: 56px;
+  scroll-margin-top: 68px;
+}
+.sec-block:first-child { margin-top: 40px; }
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--vly-gray-200);
+}
+.sec-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--vly-navy), var(--vly-blue));
+  color: var(--vly-white);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(45,107,228,0.3);
+}
+.sec-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--vly-navy);
+  letter-spacing: -0.2px;
+}
+
+h2.sub {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--vly-navy);
+  margin: 28px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+h2.sub::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(180deg, var(--vly-blue), var(--vly-teal));
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+h3.sub3 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--vly-blue);
+  margin: 18px 0 6px;
+}
+
+p { margin: 0 0 12px; color: var(--vly-text-light); line-height: 1.75; }
+p:last-child { margin-bottom: 0; }
+
+/* ── LISTS ───────────────────────────────────────────────── */
+ul.sop, ol.sop { padding-left: 24px; margin: 8px 0 16px; }
+ul.sop li, ol.sop li { margin: 5px 0; color: var(--vly-text-light); line-height: 1.7; }
+ul.sop li::marker { color: var(--vly-blue); }
+ol.sop li::marker { color: var(--vly-navy); font-weight: 700; }
+
+/* ── TABLES ──────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  margin: 16px 0 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--vly-gray-300);
+  box-shadow: var(--shadow-sm);
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table thead tr {
+  background: linear-gradient(135deg, var(--vly-navy) 0%, var(--vly-navy-mid) 100%);
+}
+table thead th {
+  padding: 11px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--vly-white);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+table thead th:first-child { border-radius: var(--radius) 0 0 0; }
+table thead th:last-child { border-radius: 0 var(--radius) 0 0; }
+table tbody tr { transition: background 0.1s; }
+table tbody tr:nth-child(even) { background: var(--vly-gray-100); }
+table tbody tr:hover { background: var(--vly-sky-pale); }
+table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--vly-gray-200);
+  vertical-align: top;
+  line-height: 1.55;
+  color: var(--vly-text-light);
+}
+table tbody tr:last-child td { border-bottom: none; }
+table td:first-child {
+  font-weight: 600;
+  color: var(--vly-navy);
+  white-space: nowrap;
+}
+code {
+  background: var(--vly-gray-200);
+  color: var(--vly-navy);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--vly-gray-300);
+}
+
+/* ── CALLOUT BOXES ───────────────────────────────────────── */
+.callout {
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0 24px;
+  border-left: 4px solid;
+  display: flex;
+  gap: 14px;
+}
+.callout-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  margin-top: 1px;
+}
+.callout-body { flex: 1; min-width: 0; }
+.callout-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+.callout-body p { font-size: 13.5px; margin-bottom: 6px; }
+.callout-body p:last-child { margin-bottom: 0; }
+
+.callout-info {
+  background: var(--vly-sky-pale);
+  border-color: var(--vly-blue);
+}
+.callout-info .callout-icon { background: var(--vly-blue); color: white; }
+.callout-info .callout-title { color: var(--vly-blue); }
+
+.callout-warning {
+  background: var(--vly-gold-pale);
+  border-color: var(--vly-gold);
+}
+.callout-warning .callout-icon { background: var(--vly-gold); color: white; }
+.callout-warning .callout-title { color: #92600A; }
+
+.callout-danger {
+  background: var(--vly-red-pale);
+  border-color: var(--vly-red);
+}
+.callout-danger .callout-icon { background: var(--vly-red); color: white; }
+.callout-danger .callout-title { color: var(--vly-red); }
+
+.callout-success {
+  background: var(--vly-green-pale);
+  border-color: var(--vly-green);
+}
+.callout-success .callout-icon { background: var(--vly-green); color: white; }
+.callout-success .callout-title { color: var(--vly-green); }
+
+/* ── CODE BLOCKS ─────────────────────────────────────────── */
+.code-block {
+  background: #0F172A;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 16px 0 20px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.8;
+  overflow-x: auto;
+  border: 1px solid #1E2D4A;
+  box-shadow: var(--shadow-sm);
+}
+.code-block .cm { color: #4ADE80; }
+.code-block .cn { color: #E2E8F0; }
+.code-block .ck { color: #FCD34D; }
+.code-block .cl { color: #7DD3FC; }
+
+/* ── TEMPLATE BOX ────────────────────────────────────────── */
+.template-box {
+  background: var(--vly-gray-100);
+  border: 1px solid var(--vly-gray-300);
+  border-left: 4px solid var(--vly-navy);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 18px 22px;
+  margin: 14px 0 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.9;
+}
+.template-box .t-title { color: var(--vly-navy); font-weight: 800; font-size: 13.5px; margin-bottom: 6px; }
+.template-box .t-line { color: var(--vly-slate); }
+
+/* ── ACK BOX ─────────────────────────────────────────────── */
+.ack-box {
+  background: var(--vly-gray-100);
+  border: 1px solid var(--vly-gray-300);
+  border-top: 3px solid var(--vly-blue);
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 20px 24px;
+  font-style: italic;
+  font-size: 14.5px;
+  color: var(--vly-text);
+  line-height: 1.8;
+}
+
+/* ── PREFIX TABLE ────────────────────────────────────────── */
+.prefix-chip {
+  display: inline-block;
+  background: var(--vly-navy);
+  color: var(--vly-white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer {
+  background: linear-gradient(135deg, var(--vly-navy-dark), var(--vly-navy));
+  padding: 28px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+footer .footer-brand { font-size: 14px; font-weight: 800; color: var(--vly-white); }
+footer .footer-tag { font-size: 12px; color: #7B9FD4; font-style: italic; margin-top: 2px; }
+footer .footer-meta { font-size: 11px; color: #5A7BA8; text-align: right; }
+footer .footer-meta span { display: block; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .content { padding: 0 24px 48px; }
+  .cover { padding: 40px 28px 36px; }
+  .cover h1 { font-size: 28px; }
+  .cover-meta-grid { grid-template-columns: repeat(2, auto); }
+  footer { flex-direction: column; text-align: center; padding: 24px 28px; }
+  footer .footer-meta { text-align: center; }
+  .topbar { padding: 0 20px; }
+}
+@media print {
+  .sidebar { display: none; }
+  .topbar { display: none; }
+  .app-shell { display: block; }
+  .sec-block { page-break-before: always; }
+  .sec-block:first-child { page-break-before: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+<!-- ── SIDEBAR ───────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-name">VIRELY LLC</div>
+    <div class="brand-tag">Enterprise Power. Small Business Heart.</div>
+    <div class="doc-badge">SOP-DEV-001 · v1.0</div>
+  </div>
+  <div class="toc-label">Contents</div>
+  <nav class="toc-nav">
+    <a href="#s1"><span class="toc-num">1</span>Purpose &amp; Scope</a>
+    <a href="#s2"><span class="toc-num">2</span>Roles &amp; Responsibilities</a>
+    <a href="#s3"><span class="toc-num">3</span>Contract Setup &amp; Onboarding</a>
+    <a href="#s4"><span class="toc-num">4</span>Task Creation &amp; Assignment</a>
+    <a href="#s5"><span class="toc-num">5</span>Milestone Structure, Module &amp; Approval</a>
+    <a href="#s6"><span class="toc-num">6</span>Documentation Requirements</a>
+    <a href="#s7"><span class="toc-num">7</span>Project Tools: Jira &amp; Otter AI</a>
+    <a href="#s8"><span class="toc-num">8</span>Testing Requirements</a>
+    <a href="#s9"><span class="toc-num">9</span>Time Logging</a>
+    <a href="#s10"><span class="toc-num">10</span>Slack Communication</a>
+    <a href="#s11"><span class="toc-num">11</span>Standup Calls &amp; Time Off</a>
+    <a href="#s12"><span class="toc-num">12</span>CEO Review &amp; Approval</a>
+    <a href="#s13"><span class="toc-num">13</span>Dispute Policies</a>
+    <a href="#s14"><span class="toc-num">14</span>Performance Standards</a>
+    <a href="#s15"><span class="toc-num">15</span>Security &amp; Compliance</a>
+    <a href="#s16"><span class="toc-num">16</span>Contractor Vetting &amp; Pre-Hire</a>
+    <a href="#s17"><span class="toc-num">17</span>Scope Change Management</a>
+    <a href="#s18"><span class="toc-num">18</span>Version Control &amp; Delivery</a>
+    <a href="#s19"><span class="toc-num">19</span>Subcontracting Policy</a>
+    <a href="#s20"><span class="toc-num">20</span>IP Assignment</a>
+    <a href="#s21"><span class="toc-num">21</span>Contractor Offboarding</a>
+    <a href="#s22"><span class="toc-num">22</span>Rate &amp; Payment Terms</a>
+    <a href="#s23"><span class="toc-num">23</span>Escalation &amp; Emergency</a>
+    <a href="#s24"><span class="toc-num">24</span>Platform Access &amp; Environments</a>
+    <a href="#s25"><span class="toc-num">25</span>Conflict of Interest</a>
+    <a href="#s26"><span class="toc-num">26</span>Performance Improvement Plan</a>
+    <a href="#s27"><span class="toc-num">27</span>Liability &amp; Indemnification</a>
+    <a href="#s28"><span class="toc-num">28</span>Professional Conduct</a>
+    <a href="#s29"><span class="toc-num">29</span>Policy Acknowledgment</a>
+    <a href="#s30"><span class="toc-num">30</span>Terms &amp; Conditions — Agreement Requirement</a>
+    <a href="#s31"><span class="toc-num">31</span>Post-Engagement Obligations</a>
+    <a href="#ack-record"><span class="toc-num">—</span>Acknowledgment Record</a>
+  </nav>
+</aside>
+
+<!-- ── MAIN ──────────────────────────────────────────────── -->
+<div class="main">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">Contractor Developer Engagement Standard Operating Procedure</div>
+  <div class="topbar-right">
+    <span class="badge badge-blue">SOP-DEV-001</span>
+    <span class="badge badge-navy">v1.0 · March 2026</span>
+    <span class="badge badge-navy">CONFIDENTIAL</span>
+  </div>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">Standard Operating Procedure</div>
+  <h1>Contractor <span>Developer</span><br>Engagement Policy</h1>
+  <div class="cover-sub">Virely LLC — Dealsby Platform Family</div>
+  <div class="cover-divider"></div>
+  <div class="cover-meta-grid">
+    <div class="cover-meta-item"><div class="meta-label">Document ID</div><div class="meta-val">SOP-DEV-001</div></div>
+    <div class="cover-meta-item"><div class="meta-label">Version</div><div class="meta-val">1.0</div></div>
+    <div class="cover-meta-item"><div class="meta-label">Effective</div><div class="meta-val">March 2026</div></div>
+    <div class="cover-meta-item"><div class="meta-label">Classification</div><div class="meta-val">Confidential</div></div>
+    <div class="cover-meta-item"><div class="meta-label">Owner</div><div class="meta-val">Brent Wright, CEO</div></div>
+    <div class="cover-meta-item"><div class="meta-label">Review Cycle</div><div class="meta-val">Quarterly</div></div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- S1 -->
+<div class="sec-block" id="s1">
+  <div class="sec-header"><div class="sec-num">1</div><div class="sec-title">Purpose &amp; Scope</div></div>
+  <p>This Standard Operating Procedure (SOP) establishes the policies, procedures, and requirements governing Virely LLC's engagement of software developers through the Upwork platform. It applies to all contractors hired to build, test, extend, or maintain any Dealsby or Virely platform including Dealsby Reservations, Dealsby Appointments, Dealsby Referrals, Virely Ops / SuperAdmin Dashboard (FlowForge), Virely Nexus, Virely Books, and Virely Corporate.</p>
+  <p>This document defines binding requirements for:</p>
+  <ul class="sop">
+    <li>Task creation, assignment, and acceptance</li>
+    <li>Milestone structure, review, and CEO approval</li>
+    <li>Testing and quality assurance before milestone release</li>
+    <li>Time logging, documentation, and deliverable standards</li>
+    <li>Project tooling: Jira, Otter AI, and Slack</li>
+    <li>Standup calls, communication SLAs, and async updates</li>
+    <li>CEO review and approval workflows</li>
+    <li>Dispute policies and resolution procedures</li>
+    <li>Professional conduct, IP assignment, and offboarding</li>
+  </ul>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Applicability</div><p>This SOP is binding on all Upwork contractors engaged by Virely LLC, regardless of contract type, engagement duration, or scope. Contractors must acknowledge receipt of and agreement to this SOP prior to commencing work.</p></div></div>
+</div>
+
+<!-- S2 -->
+<div class="sec-block" id="s2">
+  <div class="sec-header"><div class="sec-num">2</div><div class="sec-title">Roles &amp; Responsibilities</div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Role</th><th>Title</th><th>Responsibilities</th></tr></thead>
+    <tbody>
+      <tr><td>CEO / Approving Authority</td><td>Brent Wright</td><td>Final approval on all milestones, disputes, scope changes, and contract decisions. Issues task assignments and defines acceptance criteria.</td></tr>
+      <tr><td>Contractor (Developer)</td><td>Upwork Freelancer</td><td>Executes assigned tasks per spec, logs time accurately, submits deliverables, attends standups, maintains documentation, uses required project tools.</td></tr>
+      <tr><td>Lead Developer</td><td>Designated (if applicable)</td><td>May lead standup calls, review task progress, and validate documentation completeness before CEO review. <strong>Lead developer involvement in change management, platform update discussions, and platform management decisions is at the CEO's sole discretion and is not guaranteed.</strong> Cannot approve milestones, approve scope changes, or commit to future work on behalf of Virely LLC.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- S3 -->
+<div class="sec-block" id="s3">
+  <div class="sec-header"><div class="sec-num">3</div><div class="sec-title">Contract Setup &amp; Onboarding</div></div>
+  <h2 class="sub">3.1 Contract Types</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Contract Type</th><th>When Used</th></tr></thead>
+    <tbody>
+      <tr><td>Fixed-Price (Milestone-Based)</td><td>Defined feature builds, platform extensions, UI/UX work, and all deliverables with clear acceptance criteria.</td></tr>
+      <tr><td>Hourly</td><td>Ongoing maintenance, bug fixes, exploratory research, and time-sensitive support tasks where scope cannot be fully defined in advance.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">3.2 Onboarding Requirements</h2>
+  <ol class="sop">
+    <li>CEO issues a signed Upwork offer with a link to this SOP.</li>
+    <li><strong>Contractor receives and executes the Virely LLC Contractor Developer Engagement Policy via eSign (PDF).</strong> This document must be signed before project commencement. The signed PDF is retained by Virely LLC and remains accessible to the contractor throughout the engagement period. See Section 3.3.</li>
+    <li>Contractor acknowledges this SOP via Upwork message (written confirmation required).</li>
+    <li>Contractor is added to the Virely Slack workspace and <strong>#dev-conversations</strong> channel.</li>
+    <li>Contractor is added to the Virely Jira project with appropriate role (see Section 7).</li>
+    <li>CEO provisions access to required technology platforms for the engagement (see Section 3.4). Access is granted only to platforms necessary for the assigned tasks.</li>
+    <li>CEO provides the current production-stable build reference file for the relevant platform.</li>
+    <li>A kickoff video call is conducted within 48 hours of contract start; recorded via Otter AI.</li>
+    <li>Contractor confirms understanding of versioning discipline, file naming conventions, Jira workflow, and platform architecture.</li>
+  </ol>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">File Naming Convention — Dealsby Reservations</div><p>Production files follow the pattern: <code>[Platform]_[Version]_[BuildTag].html</code><br>Example: <code>Dealsby_Reservations_V2_Build2_3_GuidedTour.html</code><br>Contractors must never overwrite production-stable files. All work is on named working copies.</p></div></div>
+
+  <h2 class="sub">3.3 Policy eSign Requirement</h2>
+  <p>The Virely LLC Contractor Developer Engagement Policy (this SOP) is made available to contractors as a <strong>PDF document for electronic signature (eSign)</strong> prior to project commencement. This requirement applies to all engagements regardless of contract type or duration.</p>
+  <ul class="sop">
+    <li>The eSign PDF is delivered to the contractor via DocuSign or an equivalent eSignature platform before any platform access is provisioned or any work begins.</li>
+    <li>Contractors must complete eSign within 48 hours of receiving the document. Failure to sign within this window will result in onboarding being placed on hold until signature is received.</li>
+    <li>The fully executed (both-party-signed) PDF is retained by Virely LLC and stored in the engagement records.</li>
+    <li>A copy of the signed policy is made available to the contractor for reference throughout the duration of the engagement. Contractors may request a copy at any time via #dev-conversations.</li>
+    <li>If this SOP is updated during an active engagement, the contractor will be notified and provided a revised eSign PDF. An updated signature is required before the new version takes effect for that contractor.</li>
+    <li>The eSign PDF serves as the binding agreement record. The Upwork message acknowledgment (Section 29) is a secondary confirmation and does not replace the executed PDF.</li>
+  </ul>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">No eSign = No Access</div><p>No technology platform access, no Jira provisioning, no staging credentials, and no project commencement will occur until the contractor has executed the eSign PDF. This is a hard gate — not a courtesy requirement.</p></div></div>
+
+  <h2 class="sub">3.4 CEO-Provisioned Platform Access</h2>
+  <p>The CEO is solely responsible for provisioning contractor access to all Virely LLC technology platforms. Contractors must not attempt to self-provision access to any platform, create accounts on Virely LLC's behalf, or request access through any channel other than the CEO.</p>
+  <p>Platforms that may be provisioned for contractor access depending on engagement scope include:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Platform</th><th>Purpose</th><th>Access Level</th></tr></thead>
+    <tbody>
+      <tr><td><strong>GitHub</strong></td><td>Source code repository; version control for platform deliverables</td><td>Branch-specific access only; no main/production branch access without CEO approval</td></tr>
+      <tr><td><strong>Stripe</strong></td><td>Payment processing integration; API testing for billing features</td><td>Test mode only; no live/production Stripe account access</td></tr>
+      <tr><td><strong>SendGrid</strong></td><td>Email delivery platform; transactional email testing</td><td>Test/sandbox environment only; no production sender credentials</td></tr>
+      <tr><td><strong>Twilio</strong></td><td>SMS messaging platform; notification and communication features</td><td>Test account only; no production Twilio credentials or live phone number access</td></tr>
+      <tr><td><strong>SwaggerHub</strong></td><td>API documentation; OpenAPI spec management</td><td>Contributor access to designated API specs only</td></tr>
+      <tr><td><strong>Jira</strong></td><td>Project management; task tracking (see Section 7)</td><td>Developer role; designated projects only</td></tr>
+      <tr><td><strong>Slack</strong></td><td>Communication; #dev-conversations channel (see Section 10)</td><td>#dev-conversations only</td></tr>
+      <tr><td><strong>Otter AI</strong></td><td>Meeting recording and transcription (see Section 7.5)</td><td>View access to designated meeting transcripts only</td></tr>
+      <tr><td>Other platforms</td><td>As required by specific task assignments</td><td>Minimum necessary access; provisioned and scoped by CEO at task assignment</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Credential Security &amp; Sharing Prohibition</div><p>All platform credentials provisioned by the CEO are strictly confidential. <strong>Contractors must never share credentials, API keys, tokens, access links, or login information with any individual or party not explicitly approved by the CEO to work on Virely LLC technology platforms and assets.</strong> This prohibition applies regardless of employment relationship, team structure, or claimed authorization.</p><p>Any unauthorized credential sharing will result in immediate contract termination, revocation of all platform access, and potential legal action under the terms of the executed NDA.</p></div></div>
+
+  <h2 class="sub">3.5 Contract Platform &amp; Developer Agency Policy</h2>
+  <p><strong>Upwork is the primary developer contracting agency and default engagement platform</strong> for sourcing, vetting, contracting, and managing all developer engagements with Virely LLC. All standard contractor engagement processes, payment workflows, dispute resolution procedures, and work diary requirements defined in this SOP are written with Upwork as the primary reference platform.</p>
+  <p>Virely LLC recognizes that qualified developer services may be sourced through other agencies and platforms as project needs, talent availability, and business circumstances require. <strong>Other agencies and platforms may be used at the CEO's sole discretion</strong> to locate and engage qualified developer services. In all such cases, the behavioral, documentation, quality, and compliance standards of this SOP apply in full regardless of the sourcing channel.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Platform / Channel</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Upwork</strong></td><td>✅ Primary — Default Platform</td><td>All standard SOP workflows apply as written. Upwork Work Diary, milestone escrow, and dispute resolution are the default mechanisms.</td></tr>
+      <tr><td>Toptal</td><td>Permitted — at CEO discretion</td><td>May be used to source senior or specialized talent. Platform-specific workflows may differ; SOP behavioral and quality standards apply in full.</td></tr>
+      <tr><td>Fiverr / Fiverr Business</td><td>Permitted — at CEO discretion</td><td>Typically used for scoped, fixed-deliverable tasks. Full SOP compliance required for any multi-milestone engagement.</td></tr>
+      <tr><td>LinkedIn / direct referral hire</td><td>Permitted — at CEO discretion</td><td>Contract must be structured through Virely LLC's standard agreement. An independent contractor agreement must be executed. This SOP applies in full.</td></tr>
+      <tr><td>Staffing agencies / dev shops</td><td>Permitted — with CEO written approval</td><td>Agency agreement must be reviewed and approved by CEO. Individual developers placed through agencies must still acknowledge this SOP.</td></tr>
+      <tr><td>Any other platform or agency</td><td>CEO approval required</td><td>Must be approved by CEO in writing before engagement begins. This SOP applies in full regardless of sourcing platform or agency.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Platform-Agnostic SOP Compliance</div><p>Regardless of which platform or agency is used to source a developer, <strong>this SOP governs all contractor behavior and engagement standards.</strong> References to "Upwork message," "Upwork Work Diary," and "Upwork milestone escrow" should be read as the functional equivalent mechanism on the applicable platform when a non-Upwork channel is used. The CEO will clarify platform-specific mechanics during onboarding for any non-Upwork engagement.</p></div></div>
+</div>
+
+<!-- S4 -->
+<div class="sec-block" id="s4">
+  <div class="sec-header"><div class="sec-num">4</div><div class="sec-title">Task Creation &amp; Assignment</div></div>
+  <h2 class="sub">4.1 Task Creation (CEO Responsibility)</h2>
+  <p>All tasks are created by the CEO in Jira and communicated to contractors. Tasks must include:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Task Element</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td>Task ID (Jira)</td><td>Auto-assigned by Jira (e.g., <code>DSBY-047</code>). Referenced in all communications, time logs, commits, and file changelogs.</td></tr>
+      <tr><td>Platform / Module</td><td>Specific platform and module or area affected.</td></tr>
+      <tr><td>Description</td><td>Clear narrative of what is to be built or fixed. Includes current behavior (if a bug), expected behavior, and edge cases.</td></tr>
+      <tr><td>Acceptance Criteria</td><td>Explicit, testable conditions that define done. Minimum 3 criteria per task. Written in Jira acceptance criteria field.</td></tr>
+      <tr><td>Reference Files</td><td>Production-stable baseline file name and any design references or prior conversation links.</td></tr>
+      <tr><td>Industry / Terminology Context</td><td>For Dealsby platforms: note which industries are affected; terminology must use dynamic IC functions (<code>getIC()</code>, <code>getStaffTerms()</code>, etc.).</td></tr>
+      <tr><td>Priority</td><td>Critical / High / Medium / Low. Critical and High require same-day acknowledgment.</td></tr>
+      <tr><td>Estimated Hours or Milestone Amount</td><td>Set at task creation. Material changes require written CEO approval.</td></tr>
+      <tr><td>Deadline / Due Date</td><td>Set in Jira. For multi-day tasks, an interim check-in date is included.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">4.2 Task Acceptance (Contractor Responsibility)</h2>
+  <ol class="sop">
+    <li>Acknowledge every assigned Jira task via Upwork message within 4 business hours. Move ticket to <strong>In Progress</strong> in Jira.</li>
+    <li>Confirm understanding of acceptance criteria — ask clarifying questions in the Jira ticket comments or #dev-conversations.</li>
+    <li>Flag scope conflicts, technical blockers, or estimated-hour overruns immediately upon discovery.</li>
+    <li>Never begin work on a task that has not been formally assigned in Jira by the CEO.</li>
+    <li>Never expand task scope without written CEO approval.</li>
+  </ol>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Zero-Scope-Creep Policy</div><p>Contractors are prohibited from modifying any code, UI, or logic outside the defined task scope without explicit CEO approval. Unauthorized changes discovered during review will result in rejection of the milestone and may be grounds for contract dispute or termination. This policy is especially critical for Dealsby Reservations, where the production-stable baseline must remain intact.</p></div></div>
+</div>
+
+<!-- S5 -->
+<div class="sec-block" id="s5">
+  <div class="sec-header"><div class="sec-num">5</div><div class="sec-title">Milestone Structure, Review &amp; Approval</div></div>
+  <h2 class="sub">5.1 Milestone Design Principles</h2>
+  <ul class="sop">
+    <li>Fixed-price contracts use milestones of no more than 5 business days in duration.</li>
+    <li>Each milestone represents a discrete, testable deliverable — not a percentage of effort.</li>
+    <li>Each milestone has its own acceptance criteria defined in Jira.</li>
+    <li>Full testing and review cycle required before payment release.</li>
+  </ul>
+  <h2 class="sub">5.2 Milestone Sizing Guidelines</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Milestone Type</th><th>Maximum Value / Duration</th></tr></thead>
+    <tbody>
+      <tr><td>Single feature addition</td><td>$300 / 5 business days</td></tr>
+      <tr><td>Bug fix or patch</td><td>$150 / 2 business days</td></tr>
+      <tr><td>Platform module (multi-feature)</td><td>$500 / 7 business days (requires CEO pre-approval)</td></tr>
+      <tr><td>Full platform build or major refactor</td><td>Must be broken into sub-milestones; no single milestone &gt; $500</td></tr>
+      <tr><td>Hourly task rollup</td><td>Reviewed weekly; logged hours validated before approval</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">5.3 Milestone Submission Requirements</h2>
+  <ol class="sop">
+    <li><strong>Deliverable File(s):</strong> Named per versioning convention; submitted via Upwork file upload.</li>
+    <li><strong>Submission Summary:</strong> Posted in Upwork messages. Must include Task IDs (Jira), summary of changes, files modified, known limitations, and test results summary.</li>
+    <li><strong>Testing Documentation:</strong> Completed test checklist (see Section 8) submitted as a separate document.</li>
+    <li><strong>Time Log (hourly):</strong> Screenshot or export of logged hours for the milestone period.</li>
+    <li><strong>Change Log Entry:</strong> Brief changelog note added to the deliverable file's internal header comment.</li>
+    <li><strong>Jira Update:</strong> All completed Jira tickets moved to the <strong>Done / In Review</strong> column.</li>
+    <li><strong>Slack Notification:</strong> Post <code>[MILESTONE SUBMISSION]</code> in #dev-conversations tagging @CEO.</li>
+  </ol>
+  <h2 class="sub">5.4 CEO Review Process</h2>
+  <ol class="sop">
+    <li>CEO acknowledges receipt via Upwork message within 1 business day.</li>
+    <li>CEO conducts functional review against acceptance criteria — testing in the staging/local environment on real devices.</li>
+    <li>CEO issues one of three decisions within 5 business days:</li>
+  </ol>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Decision</th><th>Meaning</th><th>Next Step</th></tr></thead>
+    <tbody>
+      <tr><td>✅ APPROVED</td><td>All acceptance criteria met</td><td>Milestone released for payment. CEO posts confirmation in Upwork and #dev-conversations.</td></tr>
+      <tr><td>⚡ APPROVED WITH CONDITIONS</td><td>Minor issues noted</td><td>Payment released after contractor acknowledges conditions and commits to fix in next milestone.</td></tr>
+      <tr><td>❌ REJECTED</td><td>Acceptance criteria not met</td><td>No payment. Contractor must address all rejection notes and resubmit with revision summary.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Milestone Rejection Policy</div><p>A rejected milestone is not grounds for partial payment. If rejected twice for the same issues, the CEO reserves the right to reassign and terminate the contract. Contractors may not open a payment dispute on a formally rejected milestone.</p></div></div>
+  <h2 class="sub">5.5 Revision Rounds</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Round</th><th>Policy</th></tr></thead>
+    <tbody>
+      <tr><td>First Resubmission</td><td>Included in original milestone. No additional charge.</td></tr>
+      <tr><td>Second Resubmission</td><td>Included only if first rejection was due to unclear CEO acceptance criteria (CEO acknowledges in writing).</td></tr>
+      <tr><td>Third+ Resubmission</td><td>Indicates systemic issue. CEO may terminate the milestone, reassign, and initiate dispute resolution.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sub">5.6 Complete Module Requirement — Frontend &amp; Backend Integration</h2>
+  <p>Milestone approvals are based on <strong>complete, integrated modules</strong> — not isolated frontend or backend components. A milestone will not be approved and payment will not be released for partial implementations that have not been fully integrated and tested end-to-end.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Frontend + Backend Integration Required for Approval</div>
+  <p>Separating frontend and backend work into independent, disconnected milestones is not acceptable. Every milestone must deliver a fully functional, integrated module where the complete user flow — from UI interaction through backend logic, data handling, and response — has been implemented, connected, and validated.</p>
+  <p><strong>This means:</strong></p>
+  <ul class="sop" style="margin-top:6px">
+    <li>Frontend UI components must be wired to their corresponding backend logic before milestone submission — not stubbed, mocked, or left as placeholders.</li>
+    <li>API integrations, data persistence, authentication flows, and communication triggers (SMS/email via Twilio/SendGrid) must be fully functional — not simulated.</li>
+    <li>The entire end-to-end flow must be testable and verifiable by the CEO without requiring additional contractor configuration, data setup, or incomplete dependencies to be resolved separately.</li>
+    <li>Features that depend on third-party integrations (Stripe, Twilio, SendGrid, etc.) must be tested against the provisioned test/sandbox environment, with evidence of successful real-device end-to-end testing provided.</li>
+  </ul></div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Submission State</th><th>Eligible for Milestone Payment?</th><th>CEO Action</th></tr></thead>
+    <tbody>
+      <tr><td>Complete module — frontend and backend integrated, tested end-to-end on real device</td><td>✅ Yes — eligible for review and approval</td><td>CEO conducts full acceptance review</td></tr>
+      <tr><td>Frontend complete, backend not yet integrated or functional</td><td>❌ No — incomplete module</td><td>Automatic rejection; no review conducted until integration is complete</td></tr>
+      <tr><td>Backend logic complete, frontend not connected or not rendering correctly</td><td>❌ No — incomplete module</td><td>Automatic rejection; no review until full integration delivered</td></tr>
+      <tr><td>Module functional but not tested against real devices or real integration endpoints</td><td>❌ No — testing requirement not met</td><td>Rejected pending real-device test evidence</td></tr>
+      <tr><td>Module partially functional — some flows work, others are stubbed or broken</td><td>❌ No — partial functionality</td><td>CEO may reject outright or issue specific rejection notes for remediation</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Incomplete Modules &amp; Failed Testing — No Payment</div><p>Incomplete modules and failed testing results are not acceptable for milestone payment approval. The determination of completeness and testing adequacy is <strong>at the CEO's sole discretion</strong>. A submission that does not meet the complete module standard will be rejected without partial compensation, regardless of the hours logged or effort represented. Contractors must not submit a milestone for payment until they are confident the entire integrated flow works correctly on a real device.</p></div></div>
+
+  <h2 class="sub">5.7 Developer Removal for Substandard Performance or Misrepresentation</h2>
+  <p>Contractors may be removed from a project engagement immediately and without a Performance Improvement Plan (PIP) under the following conditions. These are distinct from the standard performance review process and represent situations where continuation of the engagement is not in Virely LLC's interest.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Grounds for Immediate Removal</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Substandard performance — repeated incomplete modules</td><td>Two or more milestone submissions consisting of incomplete or non-integrated modules within a single contract period, regardless of effort or hours invested.</td></tr>
+      <tr><td>Failed testing — repeated submission of untested work</td><td>Submitting milestones without real-device testing evidence, or where CEO-conducted testing reveals fundamental failures that should have been caught by the contractor's own QA process, on two or more occasions.</td></tr>
+      <tr><td>Misrepresentation of skill set</td><td>Contractor represented expertise in a technology, framework, integration, or domain required for project assignment, but demonstrated through deliverables or standup calls that the claimed skill level does not exist. This includes but is not limited to: claiming experience with specific platforms (Stripe, Twilio, SendGrid), single-file HTML/JS architecture, multi-industry SaaS systems, or any other skill specifically cited during pre-hire assessment.</td></tr>
+      <tr><td>Misrepresentation of experience</td><td>Contractor provided portfolio work, project descriptions, or credentials during pre-hire that do not accurately represent their actual experience level relevant to the assigned project tasks.</td></tr>
+      <tr><td>Inability to complete assigned tasks</td><td>After a reasonable engagement period (typically two milestone cycles), the contractor demonstrates an inability to complete assigned tasks to the quality standard required — regardless of whether misrepresentation was intentional.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Removal Process &amp; Payment Impact</div><p>When a contractor is removed under Section 5.7 grounds, the following applies:</p>
+  <ul class="sop" style="margin-top:6px">
+    <li>The CEO issues a written notice via Upwork (or applicable platform) citing the specific grounds for removal.</li>
+    <li>Only milestones that were fully approved by the CEO prior to removal are eligible for payment. Milestones in submission, review, or rejected status at the time of removal are not payable.</li>
+    <li>For misrepresentation of skill set or experience, Virely LLC reserves the right to dispute previously paid hours or milestones within the applicable Upwork (or platform) dispute window if the misrepresentation materially affected the quality of approved deliverables.</li>
+    <li>All platform access is revoked immediately upon removal notice — not at the standard 1-business-day window.</li>
+    <li>The contractor must still complete their offboarding obligations (Section 21) within 2 business days of removal notice.</li>
+  </ul></div></div>
+</div>
+<div class="sec-block" id="s6">
+  <div class="sec-header"><div class="sec-num">6</div><div class="sec-title">Documentation Requirements</div></div>
+  <h2 class="sub">6.1 Required Documentation — All Engagements</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Document</th><th>Frequency</th><th>Format / Location</th></tr></thead>
+    <tbody>
+      <tr><td>Task Acknowledgment</td><td>Per task</td><td>Upwork message + Jira ticket comment</td></tr>
+      <tr><td>Daily Time Log Entries</td><td>Daily (hourly contracts)</td><td>Upwork Work Diary; memo must reference Jira Task ID</td></tr>
+      <tr><td>Milestone Submission Summary</td><td>Per milestone</td><td>Upwork message + #dev-conversations <code>[MILESTONE SUBMISSION]</code></td></tr>
+      <tr><td>Test Results Checklist</td><td>Per milestone</td><td>.docx, .pdf, or structured Upwork message</td></tr>
+      <tr><td>Changelog Entry</td><td>Per build/deliverable</td><td>Inline header comment in delivered file</td></tr>
+      <tr><td>Blocker / Issue Report</td><td>Same day or next business day</td><td>#dev-conversations <code>[BLOCKER]</code> + Upwork message</td></tr>
+      <tr><td>Standup Notes / Status Update</td><td>Tuesday &amp; Thursday (standup days)</td><td>#dev-conversations <code>[STATUS UPDATE]</code></td></tr>
+      <tr><td>Jira Ticket Updates</td><td>As work progresses</td><td>Jira ticket status, comments, and time logs</td></tr>
+      <tr><td>Otter AI Meeting Notes</td><td>Per standup/call</td><td>Otter AI workspace (shared with CEO)</td></tr>
+      <tr><td>Final Handoff Document</td><td>At engagement end</td><td>.docx submitted via Upwork</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">6.2 Changelog Entry Format</h2>
+  <div class="code-block">
+    <span class="cm">&lt;!-- ====================================================</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp; [Platform Name] — [Version Tag]</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp; Jira Task IDs: DSBY-047, DSBY-048</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp; Developer: [Upwork Handle]</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp; Date: [YYYY-MM-DD]</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp; Changes:</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - [Brief description of change 1]</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - [Brief description of change 2]</span><br>
+    <span class="cn">&nbsp;&nbsp;&nbsp;&nbsp; Baseline: [Production-stable file referenced]</span><br>
+    <span class="ck">&nbsp;&nbsp;&nbsp;&nbsp; Status: SUBMITTED FOR REVIEW</span><br>
+    <span class="cm">==================================================== --&gt;</span>
+  </div>
+  <h2 class="sub">6.3 Final Handoff Document</h2>
+  <ul class="sop">
+    <li>List of all Jira tasks completed with Task IDs and milestone references.</li>
+    <li>Summary of all files delivered with version tags.</li>
+    <li>Known bugs, limitations, or deferred items.</li>
+    <li>Credentials, API keys, or configuration items created during the engagement.</li>
+    <li>Recommendations or notes for the next developer.</li>
+  </ul>
+</div>
+
+<!-- S7 — NEW: JIRA & OTTER AI -->
+<div class="sec-block" id="s7">
+  <div class="sec-header"><div class="sec-num">7</div><div class="sec-title">Project Management &amp; Meeting Tools: Jira &amp; Otter AI</div></div>
+  <h2 class="sub">7.1 Jira — Project Management Platform</h2>
+  <p>Virely LLC uses <strong>Jira</strong> as the official project management and task tracking platform for all Dealsby and Virely platform development. All contractors must use Jira as directed. Jira is the system of record for task status, acceptance criteria, and sprint progress.</p>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Jira is Mandatory</div><p>Jira is not optional. Contractors who fail to use Jira as required — including failing to update ticket status, log comments, or move tickets through the correct workflow — are in violation of this SOP. Consistent non-use of Jira is treated as a documentation compliance failure subject to the performance standards in Section 14.</p></div></div>
+  <h2 class="sub">7.2 Jira Access &amp; Setup</h2>
+  <ul class="sop">
+    <li>Contractors are added to the Virely Jira project during onboarding (see Section 3.2).</li>
+    <li>Contractors are assigned a <strong>Developer</strong> role by default. Lead developers may be assigned a <strong>Lead Developer</strong> role with additional visibility.</li>
+    <li>Contractors may only view and interact with projects they have been explicitly granted access to. Cross-project access is not permitted without CEO approval.</li>
+    <li>Jira access is revoked within 1 business day of contract completion or termination.</li>
+  </ul>
+  <h2 class="sub">7.3 Jira Workflow &amp; Ticket Lifecycle</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Jira Status</th><th>Meaning</th><th>Who Sets It</th></tr></thead>
+    <tbody>
+      <tr><td>To Do</td><td>Task assigned, not yet started</td><td>CEO (at task creation)</td></tr>
+      <tr><td>In Progress</td><td>Contractor is actively working on the task</td><td>Contractor (upon acknowledgment)</td></tr>
+      <tr><td>In Review / Done</td><td>Task complete; milestone submitted; awaiting CEO review</td><td>Contractor (upon milestone submission)</td></tr>
+      <tr><td>Approved</td><td>CEO has approved the milestone</td><td>CEO</td></tr>
+      <tr><td>Rejected / Rework</td><td>Milestone rejected; contractor must remediate</td><td>CEO</td></tr>
+      <tr><td>Blocked</td><td>Contractor cannot proceed without input</td><td>Contractor (must also post [BLOCKER] in #dev-conversations)</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">7.4 Jira Usage Requirements</h2>
+  <ul class="sop">
+    <li>All work performed must correspond to an open Jira ticket. No work without a ticket.</li>
+    <li>Contractors must update ticket status in real time — not batch-updated at end of day.</li>
+    <li>All blockers, questions, and task-specific discussions must be logged in the relevant Jira ticket's comment section (in addition to #dev-conversations for time-sensitive items).</li>
+    <li>Hourly contracts: time log memos must reference the Jira Task ID (e.g., <code>DSBY-047 — implementing recurring reservation modal</code>).</li>
+    <li>Contractors must not create new Jira tickets unless explicitly authorized by the CEO. All ticket creation is the CEO's responsibility.</li>
+    <li>Attachments, screenshots, and reference files relevant to a task should be uploaded to the Jira ticket, not held in email or Slack alone.</li>
+  </ul>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Jira Stale Ticket Policy</div><p>A ticket that remains in "In Progress" status for more than 3 business days beyond its due date without a comment update or blocker flag is considered stale. Stale tickets will be flagged by the CEO in the next standup call and may constitute a delivery failure under Section 14 performance metrics.</p></div></div>
+  <h2 class="sub">7.5 Otter AI — Meeting Recording &amp; Transcription</h2>
+  <p>Virely LLC uses <strong>Otter AI</strong> to automatically record, transcribe, and archive all standup calls, kickoff calls, and any other scheduled video meetings. Otter AI ensures that all decisions, action items, and commitments made during meetings are documented and searchable.</p>
+  <h2 class="sub">7.6 Otter AI Requirements</h2>
+  <ul class="sop">
+    <li>All scheduled standup and project calls are recorded via Otter AI. <strong>By joining any Virely LLC call, contractors consent to recording and transcription.</strong></li>
+    <li>Contractors may not disable, mute, or attempt to block the Otter AI recording bot from any Virely LLC meeting.</li>
+    <li>The CEO retains all Otter AI transcripts and recordings. Transcripts are stored in the Virely LLC Otter AI workspace and retained for a minimum of 12 months.</li>
+    <li>Otter AI transcripts serve as the official record of any verbal commitments, decisions, or action items made during calls. If a verbal agreement in a call contradicts a written Upwork message, the written Upwork message governs unless the CEO explicitly confirms the verbal decision in writing.</li>
+    <li>Contractors who miss a standup call may request access to the Otter AI transcript for that session via #dev-conversations.</li>
+    <li>Contractors must not share, distribute, or publish any Otter AI transcript or meeting recording without written CEO approval.</li>
+  </ul>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Action Items from Otter AI</div><p>Action items identified by Otter AI during standup calls will be reviewed by the CEO and logged as Jira tickets or task updates as appropriate. Contractors should confirm any action items verbally assigned during a call by checking the Otter AI summary and creating a corresponding Jira comment. If an action item was not captured by Otter AI, contractors should post it in #dev-conversations with the <code>[ACTION ITEM]</code> prefix immediately after the call.</p></div></div>
+</div>
+
+<!-- S8 -->
+<div class="sec-block" id="s8">
+  <div class="sec-header"><div class="sec-num">8</div><div class="sec-title">Testing Requirements for Milestone Approval</div></div>
+  <h2 class="sub">8.1 Testing Philosophy</h2>
+  <p>No milestone will be approved without documented testing. Contractors are responsible for functional QA of their own work prior to submission. CEO review is final acceptance testing, not first-pass QA.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Real Device Requirement — No Emulators</div><p>All platform testing must be performed on real, physical electronic devices. Browser-based device emulators, DevTools responsive mode, and virtual machines are not acceptable substitutes for milestone approval testing.</p><p>Contractors must test on at minimum: one physical desktop or laptop, and one physical mobile device (smartphone or tablet). Real-world usage scenarios — including actual navigation flows, data entry, modal interactions, and responsive behavior — must be verified on live hardware before submission.</p><p><strong>Milestone approval is contingent on successful real-device test results. Milestones submitted with emulator-only test evidence will be automatically rejected.</strong></p></div></div>
+  <h2 class="sub">8.2 Testing Checklist — Standard (All Platforms)</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Category</th><th>Test Item</th><th>Pass Criteria</th></tr></thead>
+    <tbody>
+      <tr><td>Functional</td><td>All acceptance criteria verified</td><td>Each criterion explicitly confirmed as passing</td></tr>
+      <tr><td>Functional</td><td>No regression in previously working features</td><td>Walk through 5 existing features adjacent to the change</td></tr>
+      <tr><td>UI/UX</td><td>All UI elements render correctly in default state</td><td>No visual breakage, misalignment, or hidden overflow</td></tr>
+      <tr><td>UI/UX</td><td>Dark mode and light mode rendering</td><td>Both modes display without corruption</td></tr>
+      <tr><td>UI/UX</td><td>Mobile (375px, 768px) and desktop (1280px+) — on real devices</td><td>All panels, modals, and navigation usable at all breakpoints on physical hardware</td></tr>
+      <tr><td>Data</td><td>No seed/demo/mock data in production build</td><td>Search codebase for hardcoded test values; confirm none present</td></tr>
+      <tr><td>Data</td><td>localStorage operations correct</td><td>Verify save, retrieve, and clear as applicable</td></tr>
+      <tr><td>Data</td><td>No data loss on page reload (where session persistence expected)</td><td>Reload page; confirm relevant data persists</td></tr>
+      <tr><td>Error Handling</td><td>Graceful error states for edge inputs</td><td>Test empty, oversized, and invalid format inputs</td></tr>
+      <tr><td>Multi-Industry</td><td>Terminology across all 14 industries (Dealsby)</td><td>Spot-check 3+ industries; verify <code>getIC()</code>, <code>getStaffTerms()</code>, <code>getPrivateEventTerms()</code></td></tr>
+      <tr><td>Performance</td><td>Zero JavaScript console errors on load</td><td>Browser console clean on load and primary interactions</td></tr>
+      <tr><td>Performance</td><td>Load time acceptable</td><td>Full load under 3 seconds on standard broadband</td></tr>
+      <tr><td>Security</td><td>No credentials or API keys hardcoded</td><td>Full file search; confirm none present</td></tr>
+      <tr><td>Compatibility</td><td>Functions in current Chrome and Edge (real devices)</td><td>Tested in both browsers on physical hardware without errors</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">8.3 Platform-Specific Testing — Dealsby Reservations</h2>
+  <ul class="sop">
+    <li>Viewport mode switching (desktop/tablet/mobile) functions correctly using Audit14 CleanViewportFix pattern (<code>.hidden</code> class toggle only; flat <code>_switchModeNow</code>/<code>_tabletSwitchMode</code>; no VP-FINAL wrapper).</li>
+    <li>Floor plan IIFE: null guards on <code>FP_resize</code> and <code>FP_draw</code>; <code>window.FP_*</code> exports deferred before init calls.</li>
+    <li>No double-booking possible for any reservation type.</li>
+    <li>All 7 platform features (SMS inbox, waitlist promotion, feedback routing, recurring reservations, server assignment, private events, waitlist join) remain functional.</li>
+    <li>Starter plan 100 reservation/month limit enforced correctly.</li>
+    <li>GDPR sub-panel z-index maintains value of 110000.</li>
+    <li>C&amp;R guest data clears on reset; session restores on reload.</li>
+    <li>SMS and email counts sourced from localStorage history only — <code>updateCommunicationStats</code> counts from history; never <code>incrementSMSUsage</code> after saving.</li>
+    <li>All dropdown selects: <code>#2a2a3d</code> (dark mode), <code>#4a5568</code> (light mode).</li>
+    <li><code>#rightDrawer</code> has <code>overflow:hidden</code>; <code>@media(max-width:1024px)</code> has <code>right:192px !important</code>; <code>welcomeScreen</code> <code>pointerEvents</code> set to <code>none</code> at fade start in <code>enterApp()</code>.</li>
+  </ul>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Testing Evidence Requirement</div><p>Contractors must provide evidence of real-device testing. Required: physical device name, OS version, browser version, and pass/fail result per checklist item. Acceptable formats: (1) Screenshots from a real device browser console showing zero errors, (2) Screen recording from a physical device covering acceptance criteria in real-world scenarios, (3) Written test results document with device specifications.</p><p>The CEO may request a live screen-share demo on a real device for any milestone valued at $200 or more, or for any change touching core platform logic.</p></div></div>
+  <h2 class="sub">8.4 Bug Discovery During Testing</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Scenario</th><th>Required Action</th></tr></thead>
+    <tbody>
+      <tr><td>Bug in contractor's own work</td><td>Fix before submitting. Do not submit known-broken work. Log in Jira ticket comments.</td></tr>
+      <tr><td>Pre-existing bug unrelated to task</td><td>Document in submission summary as "Pre-existing Issue Note" and in Jira ticket comments. Do not fix without CEO approval.</td></tr>
+      <tr><td>CEO discovers regression during review</td><td>Milestone rejected. Contractor responsible for fix at no additional charge.</td></tr>
+      <tr><td>CEO discovers pre-existing bug during review</td><td>Noted separately. Not grounds for rejection unless contractor introduced it.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- S9 -->
+<div class="sec-block" id="s9">
+  <div class="sec-header"><div class="sec-num">9</div><div class="sec-title">Time Logging Requirements</div></div>
+
+  <h2 class="sub">9.1 Upwork Work Diary Policy &amp; Mandatory Standards</h2>
+  <p>All hourly contractors must comply with both Virely LLC's internal time tracking standards and Upwork's official hourly protection policies. Upwork's Work Diary is the only accepted method of time recording for hourly engagements. Key Upwork policies contractors must understand and comply with:</p>
+  <ul class="sop">
+    <li>The Upwork Work Diary records automated screenshots at random intervals within each logged 10-minute segment. These screenshots are the primary mechanism of Upwork's hourly protection program and constitute the official record of work activity.</li>
+    <li>Contractors are responsible for ensuring screenshots capture active, on-task work — not unrelated screens, idle windows, or personal activity.</li>
+    <li>Upwork's hourly payment protection only covers hours logged through the Work Diary with manual time disabled. Hours added manually are not covered by Upwork's dispute protection.</li>
+    <li>Manual time additions must be kept to an absolute minimum, are not covered by Upwork hourly protection, and are subject to unilateral CEO review and dispute within the 5-business-day billing review window.</li>
+    <li>Contractors acknowledge that Virely LLC may dispute any weekly billing cycle within 5 business days of the invoice being issued. Past this window, hours are considered accepted.</li>
+  </ul>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">5-Business-Day Wage Dispute Window</div><p>Virely LLC reserves the right to dispute any logged hours, manual time entries, or billing line items within <strong>5 business days</strong> of the Upwork weekly billing invoice date. This window aligns with Upwork's hourly protection review period. Disputed hours are held pending resolution. Once the 5-business-day window closes, billed hours are deemed accepted and are no longer eligible for dispute by either party.</p><p>Contractors are strongly advised to ensure all logged entries are complete, accurate, and properly memoed before each billing period closes, as corrections after the window closes are not possible.</p></div></div>
+
+  <h2 class="sub">9.2 Memo Requirements — Grounds for Dismissal</h2>
+  <p>Every time log entry — without exception — must include a descriptive memo meeting the following standards. <strong>Failure to include a compliant memo is grounds for dismissal and wage dispute of the affected hours.</strong></p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Requirement</th><th>Standard</th><th>Compliant Example</th></tr></thead>
+    <tbody>
+      <tr><td>Jira Task ID</td><td>Required in every memo</td><td><code>DSBY-047</code></td></tr>
+      <tr><td>Action description</td><td>Specific, unambiguous description of the work performed during this time block</td><td><code>DSBY-047 — building recurring reservation modal: implementing date-series logic and conflict detection</code></td></tr>
+      <tr><td>Minimum length</td><td>At least 8 words describing specific activity</td><td>See above</td></tr>
+      <tr><td>Platform reference</td><td>When working across multiple platforms, specify which one</td><td><code>DSBY-047 — Dealsby Reservations — fixing GDPR sub-panel z-index overlay conflict</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Prohibited Memo Content — Automatic Flag for Review</div>
+  <p>The following memo types are <strong>explicitly prohibited</strong> and will be flagged for immediate CEO review. Repeated occurrences are grounds for dismissal and retroactive wage dispute within the 5-day window:</p>
+  <ul class="sop" style="margin-top:8px">
+    <li>Single-word entries: "coding," "debugging," "working," "development," "testing"</li>
+    <li>Generic phrases: "working on project," "working on tasks," "continued work," "misc tasks," "per our discussion"</li>
+    <li>Task ID only with no description: "DSBY-047" alone is insufficient</li>
+    <li>Time-only references: "2 hours of work on platform"</li>
+    <li>Copy-pasted identical memos across multiple entries</li>
+    <li>Retroactive summaries covering multiple days in one entry</li>
+  </ul></div></div>
+
+  <h2 class="sub">9.3 Verifiable Activity Summaries</h2>
+  <p>When submitting milestone summaries, weekly status updates, or any summary of work performed, contractors must use <strong>verifiable activity descriptions</strong> that can be cross-referenced against Upwork Work Diary entries, Jira ticket history, and deliverable files.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Prohibited Summary Methods</div>
+  <p>The following are explicitly <strong>prohibited as proof of work</strong> and will not be accepted as activity verification under any circumstances:</p>
+  <ul class="sop" style="margin-top:8px">
+    <li><strong>Slack screenshots</strong> — Slack messages are communication records, not work evidence. A Slack screenshot showing "I worked on this feature" does not constitute verifiable proof of work performed.</li>
+    <li><strong>Vague timeframe references</strong> — "I spent most of the week on this" or "I worked on this for several hours" are not acceptable. All time claims must reference specific Upwork Work Diary entries.</li>
+    <li><strong>Self-reported hour estimates</strong> — Unverified claims of hours spent, not backed by Upwork Work Diary records, are not accepted as billable time.</li>
+    <li><strong>Email or chat summaries alone</strong> — Written descriptions of work not anchored to Upwork diary entries or Jira ticket activity logs are insufficient.</li>
+    <li><strong>Calendar entries or meeting logs alone</strong> — Attendance at a standup call does not constitute billable development time beyond the actual call duration.</li>
+  </ul></div></div>
+  <p><strong>Accepted forms of work verification:</strong></p>
+  <ul class="sop">
+    <li>Upwork Work Diary entry with compliant memo and matching screenshot activity (primary)</li>
+    <li>Jira ticket comment with timestamp, linked to a specific Work Diary entry</li>
+    <li>Deliverable file with embedded changelog referencing the Jira Task ID and date</li>
+    <li>Pull request or file commit with timestamp and Jira Task ID in commit message</li>
+    <li>Otter AI transcript confirming a verbal task assignment and agreed scope (supporting evidence only)</li>
+  </ul>
+
+  <h2 class="sub">9.4 Real-Time Logging Requirement</h2>
+  <ol class="sop">
+    <li>Time must be logged in real time as work is performed — not reconstructed, estimated, or added retroactively at end of day or week.</li>
+    <li>Minimum log entry: 10 minutes per the Upwork Work Diary minimum. No entries under 10 minutes.</li>
+    <li>Weekly hours must not exceed the agreed contract limit without prior written CEO approval.</li>
+    <li>Contractors must not log time for: standup preparation beyond 10 minutes, self-directed learning, tool setup not required by a specific task, or any activity not directly assigned by the CEO via a Jira ticket.</li>
+    <li>Bathroom breaks, meals, phone calls, and personal interruptions during a logged time block must result in the Work Diary timer being paused or stopped.</li>
+  </ol>
+
+  <h2 class="sub">9.5 Fixed-Price Contract Time Transparency</h2>
+  <p>While fixed-price contracts do not require formal time logs, contractors must include in every milestone submission a time transparency statement referencing: total estimated hours spent, breakdown by task/feature area, and any significant overruns vs. original estimate. This information is used for future milestone scoping and project benchmarking.</p>
+
+  <h2 class="sub">9.6 Time Log Audits</h2>
+  <p>The CEO reserves the right to audit time logs at any time. Audits may be triggered by: deliverables inconsistent with logged hours, billing complaints, hours logged during standup-only days with no meaningful deliverable progress, or random quality review. During an audit, the CEO may request the contractor to justify any specific Work Diary entry by correlating it to a Jira ticket update, deliverable file change, or Otter AI meeting transcript.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Time Log Fraud Policy</div><p>Any evidence of time log manipulation, logging time for work not performed, logging time outside active task windows, or submitting activity summaries that misrepresent the work performed will result in: immediate contract termination, formal dispute filed on Upwork within the 5-business-day window, and potential permanent negative feedback on Upwork. Virely LLC reserves the right to withhold payment for any disputed hours pending resolution.</p></div></div>
+</div>
+
+<!-- S10 -->
+<div class="sec-block" id="s10">
+  <div class="sec-header"><div class="sec-num">10</div><div class="sec-title">Slack Communication Requirements</div></div>
+  <h2 class="sub">10.1 Official Slack Channel</h2>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">#dev-conversations — The Only Official Channel</div><p>All project communication, task updates, milestone submissions, blocker reports, standup posts, status updates, and general developer discussion must occur in <strong>#dev-conversations</strong>. No other Slack channels are designated for contractor use. All contractors must join and actively monitor this channel during contracted working hours.</p></div></div>
+  <h2 class="sub">10.2 Message Prefix System</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Message Type</th><th>Required Prefix</th></tr></thead>
+    <tbody>
+      <tr><td>Daily standup post</td><td><span class="prefix-chip">[STANDUP]</span></td></tr>
+      <tr><td>Status update (standup day)</td><td><span class="prefix-chip">[STATUS UPDATE]</span></td></tr>
+      <tr><td>Milestone submission notice</td><td><span class="prefix-chip">[MILESTONE SUBMISSION]</span> — also send Upwork message</td></tr>
+      <tr><td>Blocker or issue report</td><td><span class="prefix-chip">[BLOCKER]</span> — tag @CEO</td></tr>
+      <tr><td>Post-call action item</td><td><span class="prefix-chip">[ACTION ITEM]</span></td></tr>
+      <tr><td>General question or discussion</td><td><span class="prefix-chip">[QUESTION]</span> or <span class="prefix-chip">[FYI]</span></td></tr>
+      <tr><td>Security vulnerability report</td><td><span class="prefix-chip">[SECURITY]</span> — tag @CEO immediately</td></tr>
+      <tr><td>Time off notice</td><td><span class="prefix-chip">[TIME OFF]</span></td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">10.3 Daily Async Standup Post</h2>
+  <p>On every working day, contractors must post to #dev-conversations using the following format:</p>
+  <div class="template-box">
+    <div class="t-title">[STANDUP] — [Date] — [Your Name]</div>
+    <div class="t-line">YESTERDAY: [What was completed — reference Jira Task IDs]</div>
+    <div class="t-line">TODAY: [What is planned — reference Jira Task IDs]</div>
+    <div class="t-line">BLOCKERS: [None / Description — tag @CEO if needs attention]</div>
+    <div class="t-line">ETA: [On track / Expected completion date if changed]</div>
+  </div>
+  <h2 class="sub">10.4 Status Updates — Tuesday &amp; Thursday</h2>
+  <p>On standup call days (Tuesday and Thursday), contractors must post a <code>[STATUS UPDATE]</code> to #dev-conversations before the scheduled call time:</p>
+  <ul class="sop">
+    <li>Jira tasks completed since last standup.</li>
+    <li>Milestones submitted or approved since last standup.</li>
+    <li>Hours logged since last standup (hourly contracts).</li>
+    <li>Tasks in progress with % complete estimate.</li>
+    <li>Any risks, blockers, or concerns for the next period.</li>
+    <li>Any scope questions or clarifications needed from CEO.</li>
+  </ul>
+  <h2 class="sub">10.5 Response Time Requirements</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Communication Type</th><th>Required Response Time</th></tr></thead>
+    <tbody>
+      <tr><td>CEO direct message (Slack or Upwork)</td><td>Within 2 business hours during working hours</td></tr>
+      <tr><td>Task assignment acknowledgment</td><td>Within 4 business hours</td></tr>
+      <tr><td>Milestone review feedback acknowledgment</td><td>Within 4 business hours</td></tr>
+      <tr><td>Blocker or issue notification</td><td>Same business day or next business day at latest</td></tr>
+      <tr><td>#dev-conversations general messages</td><td>Within 4 business hours</td></tr>
+      <tr><td>Emergency (tagged @urgent)</td><td>Within 1 hour during contracted working hours</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Communication Failure Policy</div><p>Two or more SLA failures within a 2-week period may result in a formal performance warning. Three or more in a 30-day period may result in contract termination. Going dark for more than 1 business day without prior notice is grounds for immediate contract suspension.</p></div></div>
+</div>
+
+<!-- S11 -->
+<div class="sec-block" id="s11">
+  <div class="sec-header"><div class="sec-num">11</div><div class="sec-title">Standup Call Requirements &amp; Time Off</div></div>
+  <h2 class="sub">11.1 Call Schedule</h2>
+  <p>Weekly standup calls are held on <strong>Tuesday and Thursday</strong> of each week. Contractors are required to attend both calls unless excused in advance.</p>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Schedule Change Policy</div><p>Standup call times and days may be changed by the CEO or lead developer with little to no advance notice. Contractors must remain flexible and monitor #dev-conversations for schedule change notifications. Inability to adapt to schedule changes is not an acceptable excuse for missing a call.</p></div></div>
+  <p>Calls are led by either the <strong>CEO (Brent Wright)</strong> or the designated <strong>lead developer</strong>. All calls are recorded and transcribed via Otter AI (see Section 7.5).</p>
+  <h2 class="sub">11.2 Standup Call Format</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Agenda Item</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Review last period</td><td>Contractor summarizes completed Jira tasks and milestone status (max 5 minutes).</td></tr>
+      <tr><td>Blockers &amp; Issues</td><td>Open Jira blockers discussed; CEO or lead developer provides decisions.</td></tr>
+      <tr><td>Next period planning</td><td>Upcoming Jira tasks reviewed and prioritized by CEO.</td></tr>
+      <tr><td>Scope / Change discussion</td><td>Any change order requests presented and decided by CEO.</td></tr>
+      <tr><td>Q&amp;A</td><td>Contractor questions addressed. Action items captured by Otter AI.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">11.3 Call Requirements</h2>
+  <ul class="sop">
+    <li>Video is required for all standup calls. Audio-only not accepted except with advance CEO approval.</li>
+    <li>Contractors must be prepared — Jira task list, blockers, and questions ready before the call.</li>
+    <li>All calls recorded and transcribed via Otter AI. Consent is granted by joining the call.</li>
+    <li>If a contractor cannot attend, notify the CEO at least 4 hours in advance via #dev-conversations and submit a written standup summary before call time.</li>
+    <li>Repeated missed standups without notice (2+ in a 30-day period) are grounds for contract review.</li>
+  </ul>
+  <h2 class="sub">11.4 Time Off &amp; Availability Notice</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Absence Type</th><th>Minimum Notice</th><th>How to Notify</th></tr></thead>
+    <tbody>
+      <tr><td>Single day away (planned)</td><td>2 business days minimum</td><td><code>[TIME OFF]</code> in #dev-conversations + Upwork message to CEO</td></tr>
+      <tr><td>Multiple consecutive days</td><td>5 business days minimum</td><td>#dev-conversations + Upwork message; include return date and coverage plan for active deliverables</td></tr>
+      <tr><td>Unexpected absence (illness, emergency)</td><td>Notify same day as soon as possible</td><td>#dev-conversations + Upwork message; include expected return timeframe</td></tr>
+      <tr><td>Partial availability (reduced hours)</td><td>2 business days minimum</td><td>#dev-conversations with reason, duration, and adjusted availability window</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="sop">
+    <li>Failure to provide minimum notice is treated as a communication SLA failure.</li>
+    <li>The CEO does not guarantee milestone deadlines will be extended for unplanned absences.</li>
+    <li>Contractors are not entitled to paid time off. Hourly contracts are paid only for hours logged.</li>
+    <li>Absences of 5+ consecutive business days during an active fixed-price milestone may be treated as non-delivery if the deadline passes without prior CEO approval of an extension.</li>
+  </ul>
+</div>
+
+<!-- S12 -->
+<div class="sec-block" id="s12">
+  <div class="sec-header"><div class="sec-num">12</div><div class="sec-title">CEO Review &amp; Final Approval Workflow</div></div>
+  <h2 class="sub">12.1 Approval Workflow</h2>
+  <ol class="sop">
+    <li>Contractor submits deliverable with all required documentation and updates Jira to <strong>In Review</strong>.</li>
+    <li>Contractor posts <code>[MILESTONE SUBMISSION]</code> to #dev-conversations and sends Upwork message.</li>
+    <li>CEO acknowledges receipt within 1 business day.</li>
+    <li>CEO conducts functional review on real devices (up to 5 business days).</li>
+    <li>CEO posts decision (APPROVED / APPROVED WITH CONDITIONS / REJECTED) to Upwork, Slack, and updates Jira.</li>
+    <li>If APPROVED: Upwork milestone released for payment.</li>
+    <li>If REJECTED: CEO posts itemized rejection notes. Contractor has 48 hours to acknowledge and provide remediation timeline.</li>
+  </ol>
+  <h2 class="sub">12.2 CEO Authority</h2>
+  <ul class="sop">
+    <li>Approve or reject any milestone, regardless of deliverable state.</li>
+    <li>Expand or reduce task scope at any time with written notice.</li>
+    <li>Terminate a contract with or without cause, subject to Upwork's dispute policies.</li>
+    <li>Escalate a dispute to Upwork's resolution center.</li>
+  </ul>
+</div>
+
+<!-- S13 -->
+<div class="sec-block" id="s13">
+  <div class="sec-header"><div class="sec-num">13</div><div class="sec-title">Dispute Policies</div></div>
+  <h2 class="sub">13.1 Dispute Prevention</h2>
+  <p>Before any formal dispute is filed, the CEO and contractor must attempt direct resolution via a live call (recorded by Otter AI) or written exchange. The CEO will issue a written summary of the dispute and proposed resolution. The contractor has 48 hours to respond.</p>
+  <h2 class="sub">13.2 Grounds for Dispute — Virely LLC May File</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ground</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Non-delivery</td><td>Contractor failed to deliver a milestone by the agreed deadline without documented cause.</td></tr>
+      <tr><td>Failed acceptance criteria</td><td>Deliverable does not meet documented criteria after two revision rounds.</td></tr>
+      <tr><td>Scope violation</td><td>Contractor made unauthorized changes outside defined task scope.</td></tr>
+      <tr><td>Time log fraud</td><td>Evidence that logged hours do not reflect actual work performed.</td></tr>
+      <tr><td>Going dark</td><td>Contractor unresponsive for 2+ business days during an active contract.</td></tr>
+      <tr><td>Breach of confidentiality</td><td>Contractor disclosed Virely LLC platform code, data, or IP to third parties.</td></tr>
+      <tr><td>Unauthorized subcontracting</td><td>Work subcontracted to a third party without CEO written approval.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">13.3 Grounds for Dispute — Contractor Rights</h2>
+  <ul class="sop">
+    <li>CEO fails to review a submitted milestone within 5 business days without communication.</li>
+    <li>A milestone is rejected without specific, documented reasons.</li>
+    <li>Contract terminated after full delivery of an approved milestone without payment.</li>
+    <li>CEO requests work that materially expands scope without agreement on compensation.</li>
+  </ul>
+  <h2 class="sub">13.4 Resolution Process</h2>
+  <ol class="sop">
+    <li>Direct resolution attempt — 48-hour window.</li>
+    <li>If unresolved, either party may escalate to Upwork's dispute resolution center.</li>
+    <li>Virely LLC responds to all Upwork dispute notices within 3 business days with documentation.</li>
+    <li>All Upwork messages, Slack exports, Jira history, Otter AI transcripts, and deliverable files are preserved and submitted as evidence.</li>
+    <li>Upwork arbitration outcomes are binding per Upwork Terms of Service.</li>
+  </ol>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Documentation is Your Protection</div><p>Every task acknowledgment, Jira update, milestone submission, approval, rejection, and scope change decision creates a paper trail. Virely LLC retains all records — including Otter AI transcripts — for a minimum of 2 years.</p></div></div>
+  <h2 class="sub">13.5 Confidentiality &amp; IP</h2>
+  <ul class="sop">
+    <li>All work product is work-for-hire. IP transfers to Virely LLC upon payment.</li>
+    <li>Contractors may not reuse, resell, or repurpose Virely LLC platform code in other projects.</li>
+    <li>Contractors must retain no copies of Virely LLC platform files after contract termination.</li>
+    <li>No portfolio references without written CEO approval.</li>
+  </ul>
+</div>
+
+<!-- S14 -->
+<div class="sec-block" id="s14">
+  <div class="sec-header"><div class="sec-num">14</div><div class="sec-title">Performance Standards &amp; Contract Review</div></div>
+  <h2 class="sub">14.1 Performance Metrics</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Metric</th><th>Target</th></tr></thead>
+    <tbody>
+      <tr><td>Milestone on-time delivery rate</td><td>≥ 90% delivered on or before agreed Jira deadline</td></tr>
+      <tr><td>First-pass milestone approval rate</td><td>≥ 80% approved without rejection</td></tr>
+      <tr><td>Response time compliance</td><td>&lt; 2 SLA breaches per 30-day period</td></tr>
+      <tr><td>Standup attendance</td><td>≥ 90% attendance or documented substitution</td></tr>
+      <tr><td>Jira ticket hygiene</td><td>100% of active tickets updated same-day as work progresses</td></tr>
+      <tr><td>Time log compliance (hourly)</td><td>100% — every entry has a valid Jira Task ID memo</td></tr>
+      <tr><td>Bug regression rate</td><td>Zero regressions in previously approved features</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">14.2 Industry Benchmark Performance Standards</h2>
+  <p>Virely LLC benchmarks contractor performance against industry-standard completion times for comparable software development tasks. These benchmarks are derived from Upwork industry data, agile development standards, and historical Dealsby platform build velocity. When a contractor's actual timeline materially exceeds the benchmark, corrective action is required.</p>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">How Benchmarks Are Applied</div><p>Benchmarks represent the expected completion time for an experienced developer working on a clearly scoped, single-platform task with no blockers. They are not absolute deadlines, but they are the standard against which performance is evaluated. A contractor consistently delivering within or under benchmark is considered high-performing. A contractor consistently exceeding benchmark triggers the corrective action process below.</p></div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Task Type</th><th>Industry Benchmark</th><th>Virely Warning Threshold</th><th>Critical Threshold</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Critical bug fix / hotfix</td><td>4–8 hours</td><td>&gt; 12 hours</td><td>&gt; 1 business day</td><td>Black screen on load, login failure, data loss</td></tr>
+      <tr><td>Standard bug fix / patch</td><td>1–2 business days</td><td>&gt; 3 business days</td><td>&gt; 5 business days</td><td>Modal not closing, incorrect terminology, z-index conflict</td></tr>
+      <tr><td>Single UI feature</td><td>2–4 business days</td><td>&gt; 5 business days</td><td>&gt; 7 business days</td><td>New form field, panel redesign, modal addition</td></tr>
+      <tr><td>Single logic feature</td><td>3–5 business days</td><td>&gt; 7 business days</td><td>&gt; 10 business days</td><td>Recurring reservation logic, double-booking prevention</td></tr>
+      <tr><td>Multi-feature module</td><td>1–2 weeks</td><td>&gt; 2.5 weeks</td><td>&gt; 3.5 weeks</td><td>SMS inbox, waitlist promotion, server assignment system</td></tr>
+      <tr><td>Platform section build</td><td>2–4 weeks</td><td>&gt; 5 weeks</td><td>&gt; 7 weeks</td><td>Full floor plan module, CRM panel, reporting dashboard</td></tr>
+      <tr><td>Full platform build</td><td>4–6 weeks</td><td>&gt; 8 weeks</td><td>&gt; 10 weeks</td><td>New Dealsby product, complete platform migration</td></tr>
+      <tr><td>Multi-industry terminology rollout</td><td>1–2 business days</td><td>&gt; 3 business days</td><td>&gt; 5 business days</td><td>Applying getIC(), getStaffTerms() across all 14 industries</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sub">14.3 Corrective Action Process for Benchmark Overruns</h2>
+  <p>When a contractor's actual timeline reaches or exceeds the Warning Threshold for a given task type, the following corrective action process is triggered automatically:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Stage</th><th>Trigger</th><th>Required Action</th><th>CEO Involvement</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Stage 1 — Watch</strong></td><td>Actual time reaches 75% of Warning Threshold</td><td>Contractor must post a written progress update in #dev-conversations and update Jira ticket with estimated completion date. No CEO action required if explanation is satisfactory.</td><td>CEO notified; monitoring begins</td></tr>
+      <tr><td><strong>Stage 2 — Warning</strong></td><td>Actual time equals or exceeds Warning Threshold</td><td>Contractor must submit a written explanation of the overrun, a revised completion timeline, and a root cause analysis to the CEO via Upwork message within 24 hours.</td><td>CEO review required. CEO may approve the revised timeline, reduce scope, or reassign the task.</td></tr>
+      <tr><td><strong>Stage 3 — Critical</strong></td><td>Actual time equals or exceeds Critical Threshold</td><td>Mandatory CEO review call (recorded via Otter AI). Contractor must present: work completed to date, remaining scope, revised ETA, and documented blockers (if any). CEO may issue a Performance Improvement Plan (see Section 26).</td><td>CEO-led review call required within 1 business day of Critical Threshold being reached. CEO has sole authority to approve continuation, scope reduction, or contract action.</td></tr>
+      <tr><td><strong>Stage 4 — Termination Review</strong></td><td>Critical Threshold exceeded by &gt; 50% with no satisfactory resolution</td><td>Contract may be terminated for cause or for convenience. Work delivered to date is reviewed and compensated proportionally per milestones approved. Remaining milestones are forfeited or renegotiated.</td><td>CEO issues written notice via Upwork. No PIP required at this stage — termination may proceed directly.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Example: Full Platform Build Benchmark Scenario</div><p><strong>Benchmark:</strong> 4–6 weeks. <strong>Warning Threshold:</strong> 8 weeks. <strong>Critical Threshold:</strong> 10 weeks.</p><p>If a contractor is at <strong>Week 6</strong> (75% of Warning Threshold): post progress update in #dev-conversations with revised ETA.<br>If at <strong>Week 8</strong> (Warning Threshold reached): written overrun explanation required to CEO within 24 hours. CEO reviews and decides on continuation or scope reduction.<br>If at <strong>Week 10</strong> (Critical Threshold): mandatory CEO-led review call within 1 business day. PIP may be issued.<br>If at <strong>Week 15</strong> (50%+ beyond Critical): contract termination review initiated.</p></div></div>
+
+  <h2 class="sub">14.4 CEO Review Requirements for Benchmark Overruns</h2>
+  <p>In addition to the corrective action process, the CEO conducts a formal performance review when any of the following benchmark-related conditions occur:</p>
+  <ul class="sop">
+    <li>Any single task reaches Critical Threshold with no prior Warning Stage communication from the contractor.</li>
+    <li>Three or more tasks in a 60-day period reach Warning Threshold or beyond.</li>
+    <li>A full platform build or multi-feature module exceeds its Warning Threshold without a documented, CEO-approved reason.</li>
+    <li>The cumulative time on all active tasks exceeds 125% of total benchmark hours in any 30-day period.</li>
+  </ul>
+  <p>The CEO review produces one of three outcomes: (1) documented acknowledgment that the overrun was caused by external factors (platform complexity, CEO-initiated scope changes, approved blockers) — no contractor action required; (2) issuance of a Performance Improvement Plan (Section 26); or (3) contract termination.</p>
+
+  <h2 class="sub">14.5 Contract Termination</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Type</th><th>Process</th></tr></thead>
+    <tbody>
+      <tr><td>Termination for cause</td><td>CEO provides written notice via Upwork. Completed milestones paid; active incomplete milestones subject to dispute.</td></tr>
+      <tr><td>Termination for convenience</td><td>CEO provides 3 business days written notice. In-progress hourly work through notice period compensated.</td></tr>
+      <tr><td>Contractor-initiated</td><td>5 business days notice. All work in progress delivered in handoff state with documentation.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- S15 -->
+<div class="sec-block" id="s15">
+  <div class="sec-header"><div class="sec-num">15</div><div class="sec-title">Security &amp; Compliance Requirements</div></div>
+  <h2 class="sub">15.1 Access &amp; Credentials</h2>
+  <p>The CEO is the sole authority for provisioning, managing, and revoking access to all Virely LLC technology platforms. The full list of platforms that may be provisioned is defined at contract onboarding (see Section 3.4). Access is scoped to the minimum necessary for the assigned tasks.</p>
+  <ul class="sop">
+    <li>Contractors receive staging/development environment access only. No production access without explicit CEO written approval.</li>
+    <li>Credentials are communicated via secure methods only — never via Slack, Upwork messages, or email in plain text. The CEO will use a secure credential-sharing method (e.g., 1Password share link, encrypted message) for all access provisioning.</li>
+    <li><strong>Contractors must never share platform credentials, API keys, tokens, access links, or login information with any individual or party who has not been explicitly approved by the CEO to work on Virely LLC technology platforms and assets.</strong> This prohibition is absolute — it applies to teammates, subcontractors, family members, AI tools, and any other party regardless of claimed relationship to the project.</li>
+    <li><strong>All platform access is revoked within 1 business day of the contract end date</strong>, regardless of whether the contract ended by completion, mutual agreement, or termination. The CEO initiates revocation; contractors must not attempt to retain access past the contract end date.</li>
+    <li>Contractors must notify the CEO immediately via #dev-conversations <code>[SECURITY]</code> if they believe any credentials have been compromised, shared accidentally, or accessed by an unauthorized party.</li>
+  </ul>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">1-Business-Day Access Revocation Policy</div><p>All access to Virely LLC platforms — including GitHub, Stripe, SendGrid, Twilio, SwaggerHub, Jira, Slack, and any other provisioned tools — is revoked within <strong>1 business day of the contract end date</strong>. Contractors must not use, access, or attempt to access any Virely LLC platform after the contract end date, even if a technical access window remains open due to processing delays. Any access after the contract end date constitutes unauthorized access and is a breach of the NDA and this SOP.</p></div></div>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Credential Sharing — Zero Tolerance</div><p>Sharing Virely LLC platform credentials with any unapproved party is a zero-tolerance violation. It will result in immediate contract termination, revocation of all access, and potential legal action under the executed NDA. "Unapproved party" includes but is not limited to: subcontractors not cleared by CEO, family or household members, colleagues on other projects, and AI-powered tools that would store or transmit credentials to third-party services.</p></div></div>
+  <h2 class="sub">15.2 Data Handling</h2>
+  <ul class="sop">
+    <li>Contractors must not download or retain any user data, customer records, or platform analytics beyond what is necessary for the assigned task.</li>
+    <li>Any data observed during testing must be treated as confidential.</li>
+    <li>Suspected security vulnerabilities must be reported immediately via #dev-conversations <code>[SECURITY]</code> tagging @CEO.</li>
+  </ul>
+  <h2 class="sub">15.3 Code Security Standards</h2>
+  <ul class="sop">
+    <li>No API keys, credentials, tokens, or passwords may be hardcoded in any delivered file.</li>
+    <li>No third-party libraries or dependencies may be added without CEO written approval.</li>
+    <li>All delivered code must be free of <code>console.log</code> statements that expose sensitive data.</li>
+    <li>Contractors must not introduce external CDN dependencies that have not been pre-approved.</li>
+  </ul>
+</div>
+
+<!-- S16 -->
+<div class="sec-block" id="s16">
+  <div class="sec-header"><div class="sec-num">16</div><div class="sec-title">Contractor Vetting &amp; Pre-Hire Standards</div></div>
+  <h2 class="sub">16.1 Minimum Qualifications</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Requirement</th><th>Standard</th></tr></thead>
+    <tbody>
+      <tr><td>Upwork Job Success Score</td><td>90% or higher at time of offer</td></tr>
+      <tr><td>Platform experience</td><td>Demonstrated experience with single-file HTML/CSS/JS applications or equivalent SPA architecture</td></tr>
+      <tr><td>Portfolio</td><td>At least 2 verifiable prior projects in a relevant domain (SaaS dashboards, booking systems, CRM tools)</td></tr>
+      <tr><td>English proficiency</td><td>Professional written English; verified through pre-hire communication</td></tr>
+      <tr><td>Timezone availability</td><td>Minimum 4 business-hour overlap with US Eastern Time (9AM–5PM ET)</td></tr>
+      <tr><td>Upwork work history</td><td>Minimum 3 completed contracts with verifiable feedback</td></tr>
+      <tr><td>Identity verification</td><td>Upwork ID-verified badge required or equivalent at CEO discretion</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">16.2 NDA Requirement</h2>
+  <ul class="sop">
+    <li>NDA executed outside Upwork via DocuSign or equivalent before any file sharing.</li>
+    <li>Covers all Virely LLC and Dealsby platform code, architecture, pricing, customer data, and business strategy.</li>
+    <li>Term: 3 years from signing, surviving contract termination.</li>
+    <li>Must be countersigned by CEO before contractor is considered onboarded.</li>
+    <li>Failure to execute within 48 hours of offer acceptance results in offer withdrawal.</li>
+  </ul>
+  <h2 class="sub">16.3 Trial Task Policy</h2>
+  <ul class="sop">
+    <li>For engagements above $500 or involving core platform logic, a paid trial task may be required ($50–$150).</li>
+    <li>Trial task evaluated against the standard testing checklist (Section 8).</li>
+    <li>Failed trial task does not obligate Virely LLC to extend a full contract.</li>
+    <li>Trial task work product becomes Virely LLC property upon payment.</li>
+  </ul>
+</div>
+
+<!-- S17 -->
+<div class="sec-block" id="s17">
+  <div class="sec-header"><div class="sec-num">17</div><div class="sec-title">Scope Change Management &amp; Project Modifications</div></div>
+  <h2 class="sub">17.1 What Constitutes a Scope Change</h2>
+  <p>Any addition, removal, or material modification to a task or milestone not defined in the original Jira ticket. Includes: new features, changed technical approach, expanded testing requirements, new platforms or industries affected, or any change requiring 10%+ additional time. All such modifications are classified as project scope changes regardless of how they arise.</p>
+
+  <h2 class="sub">17.2 Mutual Agreement Requirement</h2>
+  <p>All project scope changes and modifications require the <strong>explicit written agreement of both the developer and the CEO</strong> before any work on the changed scope may begin. Neither party acting alone — including the CEO — can unilaterally impose a scope change that affects the contractor's time, cost, or deliverables without the other party's documented acknowledgment and agreement.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">No Unilateral Scope Changes — By Either Party</div>
+  <p><strong>Contractor side:</strong> A contractor who adds features, expands scope, or modifies areas outside the Jira ticket definition without CEO written approval has committed an unauthorized scope change. This constitutes a violation of this SOP regardless of the contractor's intent, and is grounds for milestone rejection and potential contract dispute.</p>
+  <p><strong>CEO side:</strong> The CEO may not verbally or informally instruct a contractor to add or change scope mid-task and later withhold payment because the result was not what was expected. Any CEO-initiated modification requires a written Change Order acknowledged by the contractor before work begins. Otter AI transcripts of verbal instructions do not constitute an approved Change Order unless followed up with written confirmation in Upwork messages or Jira.</p></div></div>
+
+  <h2 class="sub">17.3 Change Order Process</h2>
+  <ol class="sop">
+    <li>Either party identifies a scope change and raises it in <code>[QUESTION]</code> or <code>[FYI]</code> in #dev-conversations and comments it in the relevant Jira ticket.</li>
+    <li>The requesting party documents in writing: (a) what is changing, (b) why it is changing, (c) estimated time/cost impact, (d) impact on current milestone deadline.</li>
+    <li>CEO reviews and responds in writing within 2 business days.</li>
+    <li>If the CEO approves: CEO issues a written Change Order confirmation in Upwork messages and creates an amended Jira ticket or new Task ID. <strong>The contractor must then explicitly acknowledge and accept the Change Order in writing before proceeding.</strong> Work on changed scope may not begin until both written approval (CEO) and written acknowledgment (contractor) are on record.</li>
+    <li>If the CEO denies: Original scope stands. Contractor proceeds with original task only.</li>
+    <li>If the contractor declines the change: Contractor must explain in writing why the change is not feasible or acceptable. CEO may accept the explanation, modify the change, or escalate to a formal scope negotiation.</li>
+    <li>No verbal approvals of any kind. Otter AI meeting transcripts capture context but do not constitute binding Change Order approval without written follow-up confirmation.</li>
+  </ol>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Scenario</th><th>Required Approvals</th><th>Valid?</th></tr></thead>
+    <tbody>
+      <tr><td>CEO requests addition via Upwork message; contractor acknowledges in writing</td><td>CEO written request + Contractor written acknowledgment</td><td>✅ Valid Change Order</td></tr>
+      <tr><td>CEO verbally requests change on standup call; no follow-up writing</td><td>Verbal only — no written record</td><td>❌ Not a valid Change Order</td></tr>
+      <tr><td>Contractor expands scope without informing CEO</td><td>No approval obtained</td><td>❌ Unauthorized scope creep — grounds for rejection</td></tr>
+      <tr><td>Contractor proposes change in Jira; CEO approves in Jira comment; contractor confirms</td><td>CEO Jira approval + Contractor Jira confirmation</td><td>✅ Valid Change Order</td></tr>
+      <tr><td>CEO updates Jira ticket scope without contractor acknowledgment</td><td>CEO change only — contractor not consulted</td><td>❌ Invalid — contractor acknowledgment required</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sub">17.4 Cost Absorption for Scope Changes</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Scenario</th><th>Who Absorbs Cost</th></tr></thead>
+    <tbody>
+      <tr><td>CEO requests scope addition after task start — both parties agree to Change Order</td><td>Virely LLC — additional milestone or hourly charge approved as part of Change Order</td></tr>
+      <tr><td>CEO clarifies ambiguous acceptance criteria (not an expansion)</td><td>Virely LLC — no additional charge if clarification does not substantially increase scope</td></tr>
+      <tr><td>Contractor's estimate was too low — scope unchanged</td><td>Contractor — original estimate is contractor's responsibility</td></tr>
+      <tr><td>Third-party dependency change outside both parties' control</td><td>Shared negotiation — both parties agree on adjustment via Change Order process</td></tr>
+      <tr><td>Contractor performs unauthorized scope expansion and is rejected</td><td>Contractor — unauthorized work is not compensable</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sub">17.5 Scope Freeze Policy</h2>
+  <p>Once a milestone is in the submission/review phase, no new scope may be added to that milestone by either party. Any additional requirements identified during review will be documented and issued as a new Jira ticket on the next milestone, following the full Change Order process.</p>
+</div>
+
+<!-- S18 -->
+<div class="sec-block" id="s18">
+  <div class="sec-header"><div class="sec-num">18</div><div class="sec-title">Version Control &amp; Code Delivery Standards</div></div>
+  <h2 class="sub">18.1 Delivery Format</h2>
+  <ul class="sop">
+    <li>All deliverables submitted as named working copies — never overwrites of production-stable files.</li>
+    <li>Files named per versioning convention (Section 3.2).</li>
+    <li>Single-file deliverables: all CSS, JavaScript, and HTML in one file unless CEO explicitly approves multi-file architecture.</li>
+  </ul>
+  <h2 class="sub">18.2 Git / Repository Policy</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Standard</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td>Repository access</td><td>Granted to specific branches only. Never to main/production without CEO approval.</td></tr>
+      <tr><td>Branch naming</td><td>Feature: <code>feature/DSBY-047-description</code>. Bug: <code>fix/DSBY-048-description</code>. No generic names.</td></tr>
+      <tr><td>Commit messages</td><td><code>[DSBY-047] Brief description</code>. No commit without a valid Jira Task ID.</td></tr>
+      <tr><td>Pull requests</td><td>All work via pull request. PR description mirrors milestone submission summary.</td></tr>
+      <tr><td>Direct pushes to main</td><td>Strictly prohibited.</td></tr>
+      <tr><td>Access after termination</td><td>Revoked within 1 business day of contract end date. All local copies deleted per NDA.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">18.3 Production-Stable Baseline Protection</h2>
+  <ul class="sop">
+    <li>Always work from a named working copy — never modify the production-stable file directly.</li>
+    <li>If a contractor delivers a file that irreversibly corrupts the production-stable baseline, the contractor is liable for reconstruction time at no additional charge and the incident is grounds for immediate termination.</li>
+  </ul>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">Current Production-Stable Reference — Dealsby Reservations</div><p>File: <code>Dealsby_Reservations_V2_Build2_3_GuidedTour.html</code> — V.2 Build 2.3, March 7, 2026 LATEST. This file must never be modified directly.</p></div></div>
+</div>
+
+<!-- S19 -->
+<div class="sec-block" id="s19">
+  <div class="sec-header"><div class="sec-num">19</div><div class="sec-title">Subcontracting Policy</div></div>
+  <p>Subcontracting is prohibited by default. Work must be performed by the contracted individual. Any exception requires 5 business days written advance notice, CEO written approval, and the subcontractor must execute the same NDA. The primary contractor remains fully responsible for all subcontracted work.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Prohibited Subcontracting</div><p>The following are prohibited under all circumstances: using AI-generated code as the primary delivery mechanism without disclosure; using a third party to complete Upwork skill tests or identity verification; subcontracting to individuals in OFAC-sanctioned countries; subcontracting the entire engagement while the primary contractor performs no substantive work.</p></div></div>
+</div>
+
+<!-- S20 -->
+<div class="sec-block" id="s20">
+  <div class="sec-header"><div class="sec-num">20</div><div class="sec-title">Intellectual Property Assignment</div></div>
+  <p>All work product created under Virely LLC Upwork engagements is work-for-hire. Upon payment for any milestone, all IP rights transfer to and vest exclusively in Virely LLC. This covers all source code, design assets, documentation, and ideas conceived during the engagement.</p>
+  <ul class="sop">
+    <li>Contractors may not withhold, delete, or encrypt any deliverable as leverage in a payment dispute — doing so constitutes a material breach.</li>
+    <li>Contractors must disclose all OSS components; GPL-licensed code requires explicit CEO written approval before inclusion.</li>
+    <li>Contractors may not use Virely LLC platform code, screenshots, or descriptions in public portfolios without written CEO approval.</li>
+  </ul>
+</div>
+
+<!-- S21 -->
+<div class="sec-block" id="s21">
+  <div class="sec-header"><div class="sec-num">21</div><div class="sec-title">Contractor Offboarding Checklist</div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Step</th><th>Responsible</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>CEO</td><td>Notify contractor of contract end date. Initiate offboarding in Upwork message thread.</td></tr>
+      <tr><td>2</td><td>Contractor</td><td>Submit Final Handoff Document (.docx) per Section 6.3.</td></tr>
+      <tr><td>3</td><td>Contractor</td><td>Submit all in-progress deliverable files labeled HANDOFF (even if incomplete).</td></tr>
+      <tr><td>4</td><td>Contractor</td><td>Confirm deletion of all Virely LLC platform files from local devices and personal cloud storage via written Upwork message.</td></tr>
+      <tr><td>5</td><td>CEO</td><td>Revoke Slack (#dev-conversations) access.</td></tr>
+      <tr><td>6</td><td>CEO</td><td>Revoke Jira project access.</td></tr>
+      <tr><td>7</td><td>CEO</td><td>Revoke access to all provisioned platforms — including GitHub, Stripe, SendGrid, Twilio, SwaggerHub, and any other platforms provisioned during the engagement. All revocations must be completed within <strong>1 business day of the contract end date</strong>.</td></tr>
+      <tr><td>8</td><td>CEO</td><td>Revoke repository access. Archive all Upwork messages, Slack logs, Jira history, Otter AI transcripts, and deliverable files. Retain 2 years.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- S22 -->
+<div class="sec-block" id="s22">
+  <div class="sec-header"><div class="sec-num">22</div><div class="sec-title">Rate &amp; Payment Terms</div></div>
+  <h2 class="sub">22.1 Rate Setting</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Item</th><th>Policy</th></tr></thead>
+    <tbody>
+      <tr><td>Hourly rate</td><td>Set at contract creation. Applies to all work logged unless amended by written Change Order.</td></tr>
+      <tr><td>Fixed-price milestone amounts</td><td>Set per milestone at creation. Paid in full upon CEO approval. No partial payments.</td></tr>
+      <tr><td>Rate increase requests</td><td>Must be submitted in writing at least 14 calendar days before desired effective date. CEO must approve in writing. Applies to new milestones only.</td></tr>
+      <tr><td>Rate negotiation timing</td><td>Only at contract renewal or milestone rollover — never mid-milestone.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">22.2 Upwork Billing Acknowledgment</h2>
+  <ul class="sop">
+    <li>Hourly: Upwork bills weekly (Monday–Sunday). Hours subject to Upwork hourly protection policy.</li>
+    <li>Fixed-price: Milestones funded in escrow at milestone creation. Payment released on CEO approval only.</li>
+    <li>Contractors must not pressure the CEO to release milestone payments before review is complete.</li>
+    <li>Virely LLC will fund milestone escrow within 2 business days of milestone creation.</li>
+  </ul>
+  <h2 class="sub">22.3 Expense Policy</h2>
+  <p>Virely LLC does not reimburse contractor expenses unless explicitly pre-approved in writing by the CEO before the expense is incurred. Pre-approved expenses are submitted with receipts and processed as a bonus payment. Contractors must not purchase software licenses, cloud services, or tools on Virely LLC's behalf without written CEO pre-approval.</p>
+</div>
+
+<!-- S23 -->
+<div class="sec-block" id="s23">
+  <div class="sec-header"><div class="sec-num">23</div><div class="sec-title">Escalation &amp; Emergency Protocol</div></div>
+  <h2 class="sub">23.1 Issue Severity Classification</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Severity</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SEV-1 (Critical)</strong></td><td>Platform completely non-functional, inaccessible, or data loss occurring. Examples: black screen on load, complete login failure, all data wiped.</td></tr>
+      <tr><td><strong>SEV-2 (High)</strong></td><td>Core feature broken for all users. Examples: reservations cannot be created, floor plan fails to render, SMS sending broken.</td></tr>
+      <tr><td><strong>SEV-3 (Medium)</strong></td><td>Feature broken for a subset of users. Platform largely usable.</td></tr>
+      <tr><td><strong>SEV-4 (Low)</strong></td><td>Minor visual issue or cosmetic bug. Platform fully functional.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">23.2 Response Time Requirements by Severity</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Severity</th><th>Contractor Response SLA</th></tr></thead>
+    <tbody>
+      <tr><td>SEV-1 (Critical)</td><td>Acknowledge within 1 hour. Initial diagnosis within 2 hours. Hotfix submitted within 8 business hours.</td></tr>
+      <tr><td>SEV-2 (High)</td><td>Acknowledge within 2 hours. Diagnosis within 4 hours. Fix submitted within 1 business day.</td></tr>
+      <tr><td>SEV-3 (Medium)</td><td>Acknowledge within 4 hours. Fix submitted within 2 business days.</td></tr>
+      <tr><td>SEV-4 (Low)</td><td>Acknowledge within 1 business day. Fix scheduled into next milestone.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 class="sub">23.3 Hotfix Protocol</h2>
+  <ul class="sop">
+    <li>Submit a named hotfix file (e.g., <code>Platform_V2_Build2_3_Hotfix_DSBY-052.html</code>) with focused fix only — no bundled features or refactors.</li>
+    <li>CEO targets same-day review for SEV-1. Hotfix reviewed against the specific broken behavior only.</li>
+    <li>Post-hotfix: contractor must document root cause and submit a full regression test within 2 business days.</li>
+  </ul>
+</div>
+
+<!-- S24 -->
+<div class="sec-block" id="s24">
+  <div class="sec-header"><div class="sec-num">24</div><div class="sec-title">Platform Access &amp; Environment Policy</div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Environment</th><th>Access Policy</th></tr></thead>
+    <tbody>
+      <tr><td>Local development</td><td>Primary environment. Contractor works on local copies of staging files. No live user data accessed locally.</td></tr>
+      <tr><td>Staging / test environment</td><td>Granted for integration testing. Contains synthetic test data only. No real user records.</td></tr>
+      <tr><td>Production environment</td><td>No contractor access. CEO-only. Contractors never receive production credentials, database access, or live user data.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Real User Data Prohibition</div><p>Contractors are strictly prohibited from accessing, downloading, copying, or viewing real user data, reservation records, customer PII, or payment information at any time. Violation constitutes a material breach of contract and NDA, and will result in immediate termination and potential legal action.</p></div></div>
+  <h2 class="sub">24.1 Browser &amp; OS Requirements</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Requirement</th><th>Standard</th></tr></thead>
+    <tbody>
+      <tr><td>Primary browsers</td><td>Google Chrome (latest stable) and Microsoft Edge (latest stable) — both required on real devices</td></tr>
+      <tr><td>Secondary browsers</td><td>Firefox and Safari — spot-check for UI-heavy milestones</td></tr>
+      <tr><td>Mobile testing</td><td><strong>Real physical device required.</strong> Smartphone or tablet. No emulators or DevTools responsive mode for milestone testing.</td></tr>
+      <tr><td>Operating system</td><td>Windows 10/11 or macOS for UI testing. Linux acceptable for development only.</td></tr>
+      <tr><td>Screen resolution</td><td>Must test at 1280x720 minimum desktop and 375px mobile viewport on real hardware</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- S25 -->
+<div class="sec-block" id="s25">
+  <div class="sec-header"><div class="sec-num">25</div><div class="sec-title">Conflict of Interest</div></div>
+  <h2 class="sub">25.1 Competitor Prohibition</h2>
+  <p>For the duration of any active engagement with Virely LLC, contractors may not work for any direct competitor (reservation management, appointment scheduling, or referral marketing SaaS for small businesses), build any platform substantially similar to any Dealsby product, or repurpose knowledge from Virely LLC in competitor work.</p>
+  <h2 class="sub">25.2 Disclosure Requirements</h2>
+  <p>Contractors must disclose before contract start any prior professional relationship with a Virely LLC competitor, any Virely LLC or Dealsby client, or any individual previously employed or contracted with Virely LLC. Failure to disclose is grounds for immediate termination.</p>
+  <h2 class="sub">25.3 Moonlighting Policy</h2>
+  <p>Concurrent Upwork engagements are permitted provided they do not constitute a conflict of interest and do not reduce the contractor's availability to meet this SOP's requirements. The CEO must be notified of any new major concurrent engagement taken on during an active Virely LLC contract.</p>
+</div>
+
+<!-- S26 -->
+<div class="sec-block" id="s26">
+  <div class="sec-header"><div class="sec-num">26</div><div class="sec-title">Performance Improvement Plan (PIP)</div></div>
+  <h2 class="sub">26.1 PIP Triggers</h2>
+  <ul class="sop">
+    <li>Two milestones rejected in a 30-day period.</li>
+    <li>Three or more communication SLA failures in a 30-day period.</li>
+    <li>Two consecutive missed standup calls without documented notice.</li>
+    <li>Three or more late Jira task deliveries in a 30-day period.</li>
+    <li>Repeated time log non-compliance on 3+ entries in a week.</li>
+  </ul>
+  <h2 class="sub">26.2 PIP Process</h2>
+  <ol class="sop">
+    <li>CEO issues written PIP via Upwork message identifying specific issues, required standard, improvement targets, review period (typically 14 days), and consequences.</li>
+    <li>Contractor must acknowledge in writing within 24 hours.</li>
+    <li>Daily async check-ins via #dev-conversations during PIP period.</li>
+    <li>CEO evaluates performance at period end; closes PIP if targets met or proceeds to termination.</li>
+  </ol>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">PIP Exemption — Immediate Termination Cases</div><p>A PIP is not required for: time log fraud, unauthorized subcontracting, breach of confidentiality, going dark, scope violation, or any material breach. These are grounds for immediate termination.</p></div></div>
+</div>
+
+<!-- S27 -->
+<div class="sec-block" id="s27">
+  <div class="sec-header"><div class="sec-num">27</div><div class="sec-title">Liability &amp; Indemnification</div></div>
+  <p>Contractors' liability to Virely LLC for any single incident arising from their work is limited to the total amount paid under the relevant contract. This limitation does not apply to willful misconduct, fraud, breach of confidentiality or NDA obligations, IP infringement caused by contractor's unauthorized use of third-party code, or data breaches caused directly by contractor's negligence or misconduct.</p>
+  <p>Contractors agree to indemnify, defend, and hold harmless Virely LLC, its officers, directors, and affiliates from and against any claims, damages, losses, or expenses (including reasonable legal fees) arising from: contractor's breach of any obligation under this SOP, contractor's infringement of any third-party intellectual property rights, or any negligent or wrongful act or omission by the contractor in the performance of contracted work.</p>
+</div>
+
+<!-- S28 -->
+<div class="sec-block" id="s28">
+  <div class="sec-header"><div class="sec-num">28</div><div class="sec-title">Professional Conduct &amp; Anti-Solicitation Policy</div></div>
+  <h2 class="sub">28.1 No Promise of Future Contract Opportunities</h2>
+  <p>Virely LLC makes no representations, guarantees, or promises regarding future contract opportunities, renewals, or continued engagement beyond the current active contract. The awarding of any future work is <strong>solely at the discretion of the CEO</strong>. No coordinator, lead developer, or other associate has authority to commit to future work on behalf of Virely LLC.</p>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">CEO's Sole Discretion</div><p>Only written offers issued directly through Upwork by CEO Brent Wright constitute a binding contract commitment. Verbal promises, Slack messages, or Otter AI recordings of verbal statements by any non-CEO party do not constitute contract commitments.</p></div></div>
+  <h2 class="sub">28.2 Peer Solicitation Policy</h2>
+  <p>Contractors may not solicit other Virely LLC contractors or associates for any purpose — referrals, side projects, partnerships, or competitive work — without explicit written CEO authorization. Exception: the CEO may expressly request a referral; only CEO-initiated referrals are permitted.</p>
+  <h2 class="sub">28.3 Outside Vendor Solicitation Prohibition</h2>
+  <p>Contractors must not solicit or facilitate solicitation by outside vendors seeking to introduce products or services to Virely LLC unless the CEO has specifically requested such an introduction. Contractors who receive unsolicited vendor proposals directed at Virely LLC must disclose them to the CEO rather than acting as an intermediary. Any arrangement in which the contractor would receive a commission, referral fee, or benefit for introducing a vendor to Virely LLC is strictly prohibited.</p>
+  <h2 class="sub">28.4 No Solicitation of Reviews or Ratings</h2>
+  <p>Contractors are strictly prohibited from soliciting, requesting, or encouraging the CEO or any Virely LLC associate to leave a 5-star review, positive rating, or any public endorsement on Upwork or any other platform — at any time during or after the engagement.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Review Solicitation Consequences</div><p>Any instance of review solicitation will be documented and may result in: (1) formal warning, (2) contract termination, and/or (3) a report filed with Upwork's Trust &amp; Safety team. Reviews, if left, are voluntary and reflect the CEO's uninfluenced assessment.</p></div></div>
+</div>
+
+<!-- S29 -->
+<div class="sec-block" id="s29">
+  <div class="sec-header"><div class="sec-num">29</div><div class="sec-title">Policy Acknowledgment</div></div>
+  <p>This SOP takes effect upon contractor eSign execution and Upwork message acknowledgment. The eSign PDF (see Section 3.3) is the binding record of agreement. The Upwork message below is a secondary confirmation. Both are required before project commencement.</p>
+  <h2 class="sub">29.1 Upwork Message Acknowledgment</h2>
+  <p>Contractors must confirm acceptance via Upwork message using the following language:</p>
+  <div class="ack-box">"I have read, understand, and agree to the Virely LLC Contractor Developer Engagement SOP (SOP-DEV-001 v1.0). I have executed the eSign PDF copy of this policy. I understand that this policy is binding on my engagement and that failure to comply may result in milestone rejection, contract review, or termination. I consent to meeting recordings via Otter AI, confirm I have no current conflicts of interest with Virely LLC, and acknowledge that I must not share any provisioned platform credentials with any party not explicitly approved by the CEO."</div>
+</div>
+
+
+<!-- S30 -->
+<div class="sec-block" id="s30">
+  <div class="sec-header"><div class="sec-num">30</div><div class="sec-title">Terms &amp; Conditions — Agreement as Condition of Engagement</div></div>
+  <p>Review and agreement to the terms and conditions set forth in this Contractor Developer Engagement SOP is a <strong>mandatory condition of hiring and continued engagement</strong> for all developers working on Virely LLC marketing technology properties, including all platforms within the Dealsby product family (Dealsby Reservations, Dealsby Appointments, Dealsby Referrals), Virely Ops / SuperAdmin Dashboard (FlowForge), Virely Nexus, Virely Books, and any other current or future Virely LLC technology properties.</p>
+
+  <h2 class="sub">30.1 Agreement as a Condition of Hire</h2>
+  <p>No developer may be hired, onboarded, or granted access to any Virely LLC technology platform without first:</p>
+  <ol class="sop">
+    <li>Reading this SOP in its entirety — all sections, policies, and requirements.</li>
+    <li>Executing the eSign PDF copy of this SOP (see Section 3.3) prior to any project commencement.</li>
+    <li>Submitting a written acknowledgment via the applicable engagement platform (Upwork or otherwise) confirming full understanding and agreement (see Section 29).</li>
+    <li>Confirming, by proceeding with any assigned work, that they have understood and agree to be bound by every provision of this SOP without reservation.</li>
+  </ol>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Non-Agreement Disqualifies Engagement</div><p>Any contractor who declines, qualifies, or fails to fully acknowledge agreement to these terms and conditions will not be engaged for work on Virely LLC technology properties. There are no partial agreements — acceptance is all-or-nothing. A contractor who executes the eSign and acknowledgment but later claims unfamiliarity with any provision is not relieved of responsibility for compliance with that provision.</p></div></div>
+
+  <h2 class="sub">30.2 Agreement as a Condition of Continued Access</h2>
+  <p>Agreement to this SOP is not a one-time formality — it is a <strong>continuous condition of engagement</strong>. A contractor who is found to have violated any provision of this SOP, regardless of whether they recall agreeing to that provision, remains bound by its terms for the duration of their engagement and applicable post-engagement obligations (confidentiality, IP assignment, offboarding).</p>
+  <ul class="sop">
+    <li>If this SOP is revised during an active engagement, the contractor will be notified and provided a revised eSign PDF. Continued work after notification constitutes acknowledgment of the updated terms.</li>
+    <li>Questions about any provision of this SOP must be raised via #dev-conversations before commencing work — not after a violation has been identified.</li>
+    <li>Claiming ignorance of a specific provision is not a defense against its enforcement.</li>
+  </ul>
+
+  <h2 class="sub">30.3 Scope of Properties Covered</h2>
+  <p>This SOP and the agreement to its terms covers all work performed on or for the following Virely LLC marketing technology properties:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Property</th><th>Domain</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Dealsby Reservations</td><td>dealsby-reservations.app / dealsbyreservations.com</td><td>SaaS platform — reservation management</td></tr>
+      <tr><td>Dealsby Appointments</td><td>dealsbyappointments.com</td><td>SaaS platform — appointment scheduling</td></tr>
+      <tr><td>Dealsby Referrals</td><td>dealsbyreferrals.com</td><td>SaaS platform — referral marketing</td></tr>
+      <tr><td>Dealsby (main brand)</td><td>dealsby.io</td><td>SaaS product suite</td></tr>
+      <tr><td>Virely Ops (FlowForge) / SuperAdmin Dashboard</td><td>ops-virely.org</td><td>Internal CRM / BI / operations platform &amp; SuperAdmin Dashboard</td></tr>
+      <tr><td>Virely Nexus</td><td>As designated by CEO</td><td>Virely LLC platform — scope and domain designated at engagement</td></tr>
+      <tr><td>Virely Books</td><td>As designated by CEO</td><td>Virely LLC platform — scope and domain designated at engagement</td></tr>
+      <tr><td>Virely Corporate</td><td>virely.co</td><td>Corporate landing page and brand properties</td></tr>
+      <tr><td>Any future Virely LLC platform</td><td>As designated by CEO</td><td>This SOP extends to any new platform or property added to the Virely LLC portfolio during or after the contractor's engagement</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout callout-info"><div class="callout-icon">i</div><div class="callout-body"><div class="callout-title">SOP Applies to All Virely LLC Technology Work</div><p>This SOP is not platform-specific. A developer working on any single Virely LLC property is bound by its terms for all Virely LLC work, regardless of which specific platform or codebase they were engaged to work on. Access to one property does not grant authorization to access or modify any other Virely LLC property without explicit CEO approval.</p></div></div>
+</div>
+
+<!-- S31 -->
+<div class="sec-block" id="s31">
+  <div class="sec-header"><div class="sec-num">31</div><div class="sec-title">Post-Engagement Obligations</div></div>
+  <p>Upon the conclusion, expiration, or termination of any engagement with Virely LLC — for any reason — contractors remain subject to the following obligations, which take effect immediately upon contract end and survive indefinitely unless otherwise specified.</p>
+
+  <h2 class="sub">31.1 Deletion of Platform Files</h2>
+  <p>Contractors must permanently delete all Virely LLC platform files, source code, documentation, assets, database exports, staging data, and any other materials produced during or obtained through the engagement from all personal devices, external drives, and cloud storage accounts (including but not limited to Google Drive, Dropbox, iCloud, OneDrive, GitHub personal repositories, and any other storage medium) within <strong>48 hours of contract end</strong>.</p>
+  <ul class="sop">
+    <li>This obligation applies to all file types: <code>.html</code>, <code>.js</code>, <code>.json</code>, <code>.csv</code>, <code>.pdf</code>, <code>.docx</code>, design assets, screenshots, and any derivative works.</li>
+    <li>Contractors must not retain copies of any Virely LLC codebase, platform build, or proprietary documentation for any purpose — including personal reference, portfolio use, or future learning — without explicit written CEO authorization.</li>
+    <li>If requested by the CEO, the contractor must provide a written confirmation of deletion within 5 business days of the request.</li>
+  </ul>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">Retention of Files After Contract End Is a Breach</div><p>Failure to delete Virely LLC platform files upon contract end constitutes a material breach of this SOP and the executed NDA. Virely LLC reserves the right to pursue legal remedies, including injunctive relief and damages, for unauthorized retention or use of proprietary materials.</p></div></div>
+
+  <h2 class="sub">31.2 Portfolio Reference Policy</h2>
+  <p>Contractors may not reference, display, publish, or otherwise disclose any work performed for Virely LLC — including platform features, screenshots, code samples, UI designs, or project descriptions — in any portfolio, resume, LinkedIn profile, freelance platform profile, case study, blog post, social media post, conference presentation, or public communication without obtaining <strong>prior written approval from the CEO</strong>.</p>
+  <ul class="sop">
+    <li>Requests for portfolio approval must be submitted in writing to the CEO, identifying the specific work to be referenced, the medium or platform of publication, and the intended audience.</li>
+    <li>The CEO may approve, deny, or conditionally approve portfolio references at sole discretion. Approved references may be subject to review and content restrictions.</li>
+    <li>Generic statements such as "Worked on a SaaS platform for a marketing technology company" that do not identify Virely LLC, Dealsby, or any specific platform or feature by name may be used without approval, provided no proprietary information, screenshots, or code is disclosed.</li>
+  </ul>
+  <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-body"><div class="callout-title">Approval Required Before Any Publication</div><p>Portfolio references published without CEO written approval are a violation of this SOP and may constitute a breach of the executed NDA. Virely LLC will request removal of unauthorized references; repeated violations may result in formal legal action.</p></div></div>
+
+  <h2 class="sub">31.3 IP Assignment Survival</h2>
+  <p>All intellectual property assignment obligations set forth in Section 20 of this SOP survive the termination or expiration of any contractor engagement with Virely LLC <strong>indefinitely and without limitation</strong>. This includes, but is not limited to:</p>
+  <ul class="sop">
+    <li>All source code, scripts, modules, functions, algorithms, and technical implementations produced during the engagement.</li>
+    <li>All designs, wireframes, mockups, UI/UX assets, and visual deliverables.</li>
+    <li>All documentation, specifications, SOPs, API definitions, and written materials produced for or on behalf of Virely LLC.</li>
+    <li>All derivative works, improvements, modifications, or extensions of any Virely LLC platform or codebase.</li>
+  </ul>
+  <p>Contractors retain no ownership, license, or claim to any work product created under this engagement, and the cessation of the engagement does not alter, limit, or extinguish Virely LLC's sole and exclusive ownership of all such work product.</p>
+  <div class="callout callout-danger"><div class="callout-icon">!</div><div class="callout-body"><div class="callout-title">IP Obligations Are Perpetual</div><p>Post-engagement IP assignment obligations do not expire. A contractor who later develops a competing product, joins a competing company, or builds on knowledge gained during their Virely LLC engagement remains bound by the IP assignment executed under this SOP and the NDA. Virely LLC's IP rights are not time-limited and are enforceable beyond the contract period.</p></div></div>
+</div>
+
+<!-- ACK RECORD -->
+<div class="sec-block" id="ack-record">
+  <div class="sec-header"><div class="sec-num" style="background:var(--vly-slate)">29.2</div><div class="sec-title">Acknowledgment Record</div></div>
+  <p>This record must be completed by the CEO upon contractor onboarding and retained as part of the engagement file alongside the executed eSign PDF.</p>
+  <div class="table-wrap" style="margin-top:12px"><table>
+    <thead><tr><th>Field</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Contractor Upwork Username</td><td style="color:#A0AABF;font-style:italic">___________________________________</td></tr>
+      <tr><td>Date of Upwork Acknowledgment</td><td style="color:#A0AABF;font-style:italic">___________________________________</td></tr>
+      <tr><td>eSign PDF Executed</td><td style="color:#A0AABF;font-style:italic">Yes / No — Date: ___________________</td></tr>
+      <tr><td>Contract / Offer Reference</td><td style="color:#A0AABF;font-style:italic">___________________________________</td></tr>
+      <tr><td>Platform(s) Assigned</td><td style="color:#A0AABF;font-style:italic">___________________________________</td></tr>
+      <tr><td>Platforms Access Provisioned</td><td style="color:#A0AABF;font-style:italic">GitHub / Stripe / SendGrid / Twilio / SwaggerHub / Jira / Other: ___________</td></tr>
+      <tr><td>Jira Project Access Confirmed</td><td style="color:#A0AABF;font-style:italic">Yes / No — Date: ___________________</td></tr>
+      <tr><td>NDA Signed</td><td style="color:#A0AABF;font-style:italic">Yes / No — Date: ___________________</td></tr>
+      <tr><td>Contract End Date / Access Revocation Deadline</td><td style="color:#A0AABF;font-style:italic">___________________________________</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+</div><!-- /content -->
+
+<footer>
+  <div>
+    <div class="footer-brand">VIRELY LLC</div>
+    <div class="footer-tag">Enterprise Power. Small Business Heart.</div>
+  </div>
+  <div class="footer-meta">
+    <span>SOP-DEV-001 &nbsp;·&nbsp; Version 1.0 &nbsp;·&nbsp; March 2026</span>
+    <span>virely.co &nbsp;·&nbsp; dealsby.io</span>
+    <span>CONFIDENTIAL — INTERNAL USE ONLY</span>
+  </div>
+</footer>
+
+</div><!-- /main -->
+</div><!-- /app-shell -->
+
+<script>
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('.sec-block');
+const navLinks = document.querySelectorAll('.toc-nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      const link = document.querySelector(`.toc-nav a[href="#${id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.2, rootMargin: '-60px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
