@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  // Prevent flash of wrong theme on load
+  (function(){
+    var t = localStorage.getItem('vly-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -606,6 +613,79 @@ ul.sop li, ol.sop li { color: #A1A1AA !important; }
 ul.sop li::marker { color: #7C3AED !important; }
 ol.sop li::marker { color: #C026D3 !important; font-weight: 700; }
 strong { color: #FAFAFA !important; }
+
+/* ── THEME TOGGLE BUTTON ───────────────────────────────────── */
+.theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid rgba(124,58,237,0.45);
+  background: rgba(124,58,237,0.15);
+  color: #A78BFA;
+  cursor: pointer;
+  font-family: var(--font);
+  letter-spacing: 0.4px;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  white-space: nowrap;
+}
+.theme-btn:hover {
+  background: rgba(124,58,237,0.28);
+  color: #FFFFFF;
+  border-color: rgba(124,58,237,0.7);
+}
+
+/* ── LIGHT MODE — Virely Brand Guidelines §3.3 ─────────────── */
+[data-theme="light"] body                        { background: #FAFAFA !important; color: #18181B !important; }
+[data-theme="light"] .app-shell                  { background: #FFFFFF !important; box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important; }
+[data-theme="light"] .sidebar                    { background: #18181B !important; }
+[data-theme="light"] .topbar                     { background: #FFFFFF !important; border-bottom-color: #E5E7EB !important; }
+[data-theme="light"] .topbar-left                { color: #52525B !important; }
+[data-theme="light"] .main                       { background: #FFFFFF !important; }
+[data-theme="light"] .content                    { background: #FFFFFF; }
+[data-theme="light"] p                           { color: #52525B !important; }
+[data-theme="light"] li                          { color: #52525B !important; }
+[data-theme="light"] .sec-title                  { color: #18181B !important; }
+[data-theme="light"] h2.sub                      { color: #18181B !important; }
+[data-theme="light"] h3.sub3                     { color: #7C3AED !important; }
+[data-theme="light"] strong                      { color: #18181B !important; }
+[data-theme="light"] ul.sop li,
+[data-theme="light"] ol.sop li                   { color: #52525B !important; }
+[data-theme="light"] ul.sop li::marker           { color: #7C3AED !important; }
+[data-theme="light"] ol.sop li::marker           { color: #C026D3 !important; }
+[data-theme="light"] .sec-header                 { border-bottom-color: #E5E7EB !important; }
+/* Tables */
+[data-theme="light"] .table-wrap                 { border-color: #E5E7EB !important; }
+[data-theme="light"] table td                    { color: #52525B !important; border-bottom-color: #E5E7EB !important; }
+[data-theme="light"] table td:first-child        { color: #6D28D9 !important; }
+[data-theme="light"] table tbody tr:nth-child(even) { background: #F9FAFB !important; }
+[data-theme="light"] table tbody tr:hover        { background: #F3E8FF !important; }
+/* Code */
+[data-theme="light"] code                        { background: #F3E8FF !important; color: #6D28D9 !important; }
+/* Callouts */
+[data-theme="light"] .callout-info               { background: #FAF5FF !important; border-left-color: #7C3AED !important; }
+[data-theme="light"] .callout-info .callout-icon { background: #7C3AED !important; color: #fff !important; }
+[data-theme="light"] .callout-info .callout-title{ color: #6D28D9 !important; }
+[data-theme="light"] .callout-info p             { color: #52525B !important; }
+[data-theme="light"] .callout-warning            { background: #FFFBEB !important; border-left-color: #F59E0B !important; }
+[data-theme="light"] .callout-warning .callout-icon { background: #F59E0B !important; color: #000 !important; }
+[data-theme="light"] .callout-warning .callout-title { color: #92400E !important; }
+[data-theme="light"] .callout-warning p          { color: #52525B !important; }
+[data-theme="light"] .callout-danger             { background: #FEF2F2 !important; border-left-color: #EF4444 !important; }
+[data-theme="light"] .callout-danger .callout-icon { background: #EF4444 !important; color: #fff !important; }
+[data-theme="light"] .callout-danger .callout-title { color: #B91C1C !important; }
+[data-theme="light"] .callout-danger p           { color: #52525B !important; }
+/* Ack box */
+[data-theme="light"] .ack-box                    { background: #FAF5FF !important; border-color: #E9D5FF !important; border-left-color: #7C3AED !important; color: #18181B !important; }
+/* Badges */
+[data-theme="light"] .badge-blue                 { background: #EDE9FE !important; color: #7C3AED !important; }
+[data-theme="light"] .badge-navy                 { background: #F5F3FF !important; color: #6D28D9 !important; }
+/* Theme button in light mode */
+[data-theme="light"] .theme-btn                  { border-color: rgba(109,40,217,0.30) !important; background: rgba(109,40,217,0.07) !important; color: #7C3AED !important; }
+[data-theme="light"] .theme-btn:hover            { background: rgba(109,40,217,0.15) !important; color: #4C1D95 !important; border-color: rgba(109,40,217,0.5) !important; }
 </style>
 </head>
 <body>
@@ -663,6 +743,10 @@ strong { color: #FAFAFA !important; }
     <span class="badge badge-blue">SOP-DEV-001</span>
     <span class="badge badge-navy">v1.0 · March 2026</span>
     <span class="badge badge-navy">CONFIDENTIAL</span>
+    <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+      <span class="theme-icon"></span>
+      <span class="theme-label"></span>
+    </button>
   </div>
 </div>
 
@@ -1772,15 +1856,40 @@ strong { color: #FAFAFA !important; }
 </div><!-- /app-shell -->
 
 <script>
-// Sidebar active state on scroll
+// ── THEME TOGGLE ─────────────────────────────────────────────
+const THEME_KEY = 'vly-theme';
+const toggleBtn  = document.getElementById('theme-toggle');
+const themeIcon  = toggleBtn.querySelector('.theme-icon');
+const themeLabel = toggleBtn.querySelector('.theme-label');
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+  if (theme === 'light') {
+    themeIcon.textContent  = '🌙';
+    themeLabel.textContent = 'Dark';
+  } else {
+    themeIcon.textContent  = '☀️';
+    themeLabel.textContent = 'Light';
+  }
+}
+
+// Init from saved preference (anti-flash already applied in <head>)
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+
+toggleBtn.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  applyTheme(current === 'light' ? 'dark' : 'light');
+});
+
+// ── SIDEBAR SCROLL SPY ───────────────────────────────────────
 const sections = document.querySelectorAll('.sec-block');
-const navLinks = document.querySelectorAll('.toc-nav a');
-const observer = new IntersectionObserver((entries) => {
+const navLinks  = document.querySelectorAll('.toc-nav a');
+const observer  = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       navLinks.forEach(l => l.classList.remove('active'));
-      const id = e.target.id;
-      const link = document.querySelector(`.toc-nav a[href="#${id}"]`);
+      const link = document.querySelector(`.toc-nav a[href="#${e.target.id}"]`);
       if (link) link.classList.add('active');
     }
   });
